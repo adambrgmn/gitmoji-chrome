@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as storage from './utils/storage';
 import Header from './components/Header';
 import SearchInput from './components/SearchInput';
 import EmojiPreview, { EmojiPreviewContainer } from './components/EmojiPreview';
@@ -6,6 +7,7 @@ import SuccessMessage from './components/SuccessMessage';
 
 class App extends Component {
   state = {
+    recent: [],
     emojis: [],
     colors: [],
     filter: '',
@@ -18,6 +20,7 @@ class App extends Component {
   componentDidMount() {
     this.fetchEmojis();
     this.fetchEmojiColors();
+    this.getRecentlyUsed();
   }
 
   fetchEmojis = async () => {
@@ -54,6 +57,27 @@ class App extends Component {
     this.setState(({ colors }) => ({ colors: [...colors, ...match] }));
   };
 
+  getRecentlyUsed = async () => {
+    try {
+      const { recentEmojis } = await storage.get('recentEmojis');
+      if (Array.isArray(recentEmojis)) {
+        this.setState(() => ({ recent: recentEmojis }));
+      }
+
+    } catch (e) {
+    }
+  };
+
+  addToRecentlyUsed = async emoji => {
+    const recent = [
+      emoji,
+      ...this.state.recent.filter(e => e.code !== emoji.code),
+    ].slice(0, 5);
+
+    this.setState(() => ({ recent }));
+    await storage.set('recentEmojis', recent);
+  };
+
   handleChange = ({ target }) => {
     const filter = target.value;
     this.setState(() => ({ filter }));
@@ -75,6 +99,7 @@ class App extends Component {
           error: null,
         }));
 
+        this.addToRecentlyUsed(emoji);
         this.timeout = window.setTimeout(
           () => this.setState(() => ({ showMessage: false })),
           3000,
@@ -113,7 +138,7 @@ class App extends Component {
   };
 
   render() {
-    const { filter, copied, showMessage } = this.state;
+    const { recent, filter, copied, showMessage } = this.state;
 
     return (
       <div className="container">
@@ -124,6 +149,7 @@ class App extends Component {
         />
         <Header />
         <SearchInput onChange={this.handleChange} value={filter} />
+        <div>Recent: {recent.map(e => <span key={e.code}>{e.code}</span>)}</div>
         <EmojiPreviewContainer>
           {this.filterEmojis().map(e => (
             <EmojiPreview
