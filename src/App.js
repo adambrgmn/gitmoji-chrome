@@ -85,11 +85,6 @@ class App extends Component {
     }
   };
 
-  handleCloseMessage = () => {
-    window.clearTimeout(this.timeout);
-    this.setState(() => ({ showMessage: false }));
-  };
-
   filterEmojis = () => {
     const { emojis, filter } = this.state;
     if (!filter) return emojis;
@@ -126,7 +121,6 @@ class App extends Component {
           emoji={copied}
           show={copied && showMessage}
           hide={copied && !showMessage}
-          onCloseClick={this.handleCloseMessage}
         />
         <Header />
         <SearchInput onChange={this.handleChange} value={filter} />
@@ -142,9 +136,9 @@ class App extends Component {
         </EmojiPreviewContainer>
         <footer className="footer">
           <p className="credit">
-            Created with love of{' '}
+            Send all love to{' '}
             <a href="https://github.com/carloscuesta/gitmoji/">
-              @carloscuesta/gitmoji
+              carloscuesta/gitmoji
             </a>
           </p>
         </footer>

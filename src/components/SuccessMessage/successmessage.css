@@ -13,36 +13,6 @@
   z-index: var(--zi3)
 }
 
-.message .close-button {
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  width: 20px;
-  height: 20px;
-  text-indent: -9999px;
-  cursor: pointer;
-  backface-visibility: hidden;
-}
-
-.close-button::before,
-.close-button::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 3px;
-  height: 60%;
-  background: var(--color-white);
-}
-
-.close-button::before {
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.close-button::after {
-  transform: translate(-50%, -50%) rotate(-45deg);
-}
-
 .message.show {
   transform: translate3d(0, -3000px, 0);
   animation-name: bounceInDown;
@@ -55,6 +25,7 @@
 
 .message-message {
   margin: var(--scale--1) 0;
+  font-size: var(--scale-0);
   font-weight: 700;
   color: var(--color-white);
 }
