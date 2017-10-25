@@ -1,0 +1,4 @@
+.header {
+  padding: var(--scale-1);
+  background-color: var(--color-yellow);
+}
