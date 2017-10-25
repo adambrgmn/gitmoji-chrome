@@ -22,6 +22,7 @@
 .emoji-card:hover {
   box-shadow: 0 4px 8px 0 rgba(168,182,191,0.6);
   transform: translateY(-3px);
+  cursor: pointer;
 }
 
 .emoji-card-header {
@@ -41,6 +42,10 @@
 .emoji-card-info {
   padding-left: var(--scale-0);
 }
+
+.emoji-card-info .code {
+  font-size: var(--scale-0);
+}  
 
 .emoji-card-desc {
   margin: 0;
