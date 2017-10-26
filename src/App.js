@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as storage from './utils/storage';
-import SuccessMessage from './components/SuccessMessage';
+import Notify from './components/Notify';
 import Header from './components/Header';
 import SearchInput from './components/SearchInput';
 import RecentPreview, {
@@ -8,6 +8,9 @@ import RecentPreview, {
 } from './components/RecentPreview';
 import EmojiPreview, { EmojiPreviewContainer } from './components/EmojiPreview';
 import Footer from './components/Footer';
+import extractScssVars from './utils/extract-scss-vars';
+import * as message from './utils/message';
+import * as clipboard from './utils/clipboard';
 
 class App extends Component {
   state = {
@@ -15,8 +18,7 @@ class App extends Component {
     emojis: [],
     colors: [],
     filter: '',
-    copied: null,
-    showMessage: false,
+    messages: [],
   };
 
   timeout = null;
@@ -24,47 +26,45 @@ class App extends Component {
   componentDidMount() {
     this.fetchEmojis();
     this.fetchRecent();
+    this.fetchEmojiColors();
+  }
+
+  componentDidCatch(error) {
+    const msg = {
+      message: error.message,
+      type: 'error',
+    };
+
+    this.setState(() => ({ message: msg }));
   }
 
   fetchEmojis = async () => {
-    const res = await fetch(
-      'https://raw.githubusercontent.com/carloscuesta/gitmoji/master/src/data/gitmojis.json',
-    );
-    const { gitmojis } = await res.json();
+    try {
+      const res = await fetch(
+        'https://raw.githubusercontent.com/carloscuesta/gitmoji/master/src/data/gitmojis.json',
+      );
+      const { gitmojis } = await res.json();
 
-    this.setState(
-      ({ emojis }) => ({
-        emojis: [...emojis, ...gitmojis],
-      }),
-      this.fetchEmojiColors,
-    );
+      this.setState(({ emojis }) => ({
+        emojis: gitmojis,
+      }));
+    } catch (e) {
+      this.handleError(e);
+    }
   };
 
   fetchEmojiColors = async () => {
-    const variableRe = /((\w|-)+): \$(\w+),/g;
-    const res = await fetch(
-      'https://raw.githubusercontent.com/carloscuesta/gitmoji/master/src/styles/_includes/_vars.scss',
-    );
-    const scss = await res.text();
-    const match = [];
-    let haveResult = true;
+    try {
+      const res = await fetch(
+        'https://raw.githubusercontent.com/carloscuesta/gitmoji/master/src/styles/_includes/_vars.scss',
+      );
+      const scss = await res.text();
+      const match = extractScssVars(scss);
 
-    while (haveResult) {
-      const result = variableRe.exec(scss);
-
-      if (result == null || result.length < 1) {
-        haveResult = false;
-      } else {
-        const emojiName = result[1];
-        const colorName = result[3];
-        const re = new RegExp(`\\$${colorName}\\s?: (#.{6});`, 'g');
-        const [, color] = re.exec(scss);
-
-        match.push({ name: emojiName, color });
-      }
+      this.setState(({ colors }) => ({ colors: [...colors, ...match] }));
+    } catch (e) {
+      this.handleError(e);
     }
-
-    this.setState(({ colors }) => ({ colors: [...colors, ...match] }));
   };
 
   fetchRecent = async () => {
@@ -74,22 +74,22 @@ class App extends Component {
         this.setState(() => ({ recent: recentEmojis }));
       }
     } catch (e) {
-      console.error(e.message);
+      this.handleError(e);
     }
   };
 
   addToRecentlyUsed = async emoji => {
-    const recent = [
-      emoji,
-      ...this.state.recent.filter(e => e.code !== emoji.code),
-    ].slice(0, 5);
-
-    this.setState(() => ({ recent }));
-
     try {
+      const recent = [
+        emoji,
+        ...this.state.recent.filter(e => e.code !== emoji.code),
+      ].slice(0, 5);
+
+      this.setState(() => ({ recent }));
+
       await storage.set('recentEmojis', recent);
     } catch (e) {
-      console.error(e.message);
+      this.handleError(e);
     }
   };
 
@@ -100,38 +100,22 @@ class App extends Component {
 
   handleClick = emoji => {
     try {
-      const textarea = document.createElement('textarea');
-      textarea.value = emoji.code;
-      document.body.append(textarea);
-      textarea.select();
+      const success = clipboard.copy(emoji.code);
 
-      const success = document.execCommand('Copy');
       if (success) {
-        document.body.removeChild(textarea);
-        this.setState(() => ({
-          copied: emoji,
-          showMessage: true,
-          error: null,
-        }));
+        const newMessage = {
+          message: `Copied ${emoji.code} to clipboard!`,
+          emoji: emoji.emoji,
+          type: 'standard',
+        };
+
+        this.addMessage(newMessage);
 
         this.addToRecentlyUsed(emoji);
-        this.timeout = window.setTimeout(
-          () => this.setState(() => ({ showMessage: false })),
-          3000,
-        );
+        message.send({ emoji }).catch(e => console.error(e.message));
       }
-    } catch (error) {
-      this.setState(() => ({ error }));
-    }
-
-    try {
-      /* eslint-disable */
-      chrome.tabs.query({ active: true }, tabs => {
-        chrome.tabs.sendMessage(tabs[0].id, { emoji })
-      });
-      /* eslint-enable */
-    } catch (e) {
-      console.error(e.message)
+    } catch (e) {
+      this.handleError(e);
     }
   };
 
@@ -162,33 +146,45 @@ class App extends Component {
     return match.color;
   };
 
+  addMessage = msg => {
+    this.setState(({ messages }) => ({ messages: [...messages, msg] }));
+  };
+
+  handleError = e => {
+    const msg = {
+      message: e.message,
+      type: 'error',
+    };
+
+    this.setState(({ messages }) => ({
+      messages: [...messages, msg],
+    }));
+  };
+
   render() {
-    const { recent, filter, copied, showMessage } = this.state;
+    const { recent, filter, messages } = this.state;
 
     return (
       <div className="container">
-        <SuccessMessage
-          emoji={copied}
-          show={copied && showMessage}
-          hide={copied && !showMessage}
-        />
+        <Notify messages={messages} />
 
         <Header />
 
         <SearchInput onChange={this.handleChange} value={filter} />
 
-        {filter.length < 1 && (
-          <RecentPreviewContainer>
-            {recent.map(e => (
-              <RecentPreview
-                key={e.code}
-                emoji={e}
-                color={this.findMatchingColor(e.name)}
-                onClick={() => this.handleClick(e)}
-              />
-            ))}
-          </RecentPreviewContainer>
-        )}
+        {filter.length < 1 &&
+          recent.length > 0 && (
+            <RecentPreviewContainer>
+              {recent.map(e => (
+                <RecentPreview
+                  key={e.code}
+                  emoji={e}
+                  color={this.findMatchingColor(e.name)}
+                  onClick={() => this.handleClick(e)}
+                />
+              ))}
+            </RecentPreviewContainer>
+          )}
 
         <EmojiPreviewContainer>
           {this.filterEmojis().map(e => (
