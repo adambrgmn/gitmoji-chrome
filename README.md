@@ -14,7 +14,7 @@ Gitmoji Chrome Extension is an extension that can be used to get quick acces to 
 
 > Gitmoji is an initiative to standardize and explain the use of emojis on GitHub commit messages.
 
-Go to the [extensions page in Chrome](https://chrome.google.com/webstore/category/extensions) and find Gitmoji and install it.
+Go to the [extensions page in Chrome](https://chrome.google.com/webstore/detail/gitmoji/jhhfejfgefheljcenfehikpfmmpglhca) and find Gitmoji and install it.
 
 ## Special
 
