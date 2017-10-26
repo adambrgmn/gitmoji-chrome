@@ -172,8 +172,7 @@ class App extends Component {
 
         <SearchInput onChange={this.handleChange} value={filter} />
 
-        {filter.length < 1 &&
-          recent.length > 0 && (
+        {filter.length < 1 && (
             <RecentPreviewContainer>
               {recent.map(e => (
                 <RecentPreview

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children } from 'react';
 import PropTypes from 'prop-types';
 import './recentpreview.css';
 
@@ -22,8 +22,24 @@ RecentPreview.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
+export function EmptyPreview() {
+  return (
+    <button className="recent-button recent-button-empty" disabled>
+      {' '}
+    </button>
+  );
+}
+
 export function RecentPreviewContainer({ children }) {
-  return <div className="recent-container">{children}</div>;
+  const childrenLength = Children.toArray(children).length;
+  const emptySpots = [...Array.from({ length: 5 - childrenLength })];
+
+  return (
+    <div className="recent-container">
+      {children}
+      {emptySpots.map((_, i) => <EmptyPreview key={i} />)}
+    </div>
+  );
 }
 
 RecentPreviewContainer.propTypes = {

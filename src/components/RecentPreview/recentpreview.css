@@ -31,6 +31,21 @@
   outline: none;
 }
 
+.recent-button-empty {
+  background-color: transparent;
+}
+
+.recent-button-empty::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px dashed var(--color-grey);
+  border-radius: 4px;
+}
+
 .recent-emoji {
   position: absolute;
   top: 50%;
