@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import * as storage from './utils/storage';
 import Header from './components/Header';
 import SearchInput from './components/SearchInput';
+import RecentPreview, {
+  RecentPreviewContainer,
+} from './components/RecentPreview';
 import EmojiPreview, { EmojiPreviewContainer } from './components/EmojiPreview';
 import SuccessMessage from './components/SuccessMessage';
 
@@ -19,8 +22,7 @@ class App extends Component {
 
   componentDidMount() {
     this.fetchEmojis();
-    this.fetchEmojiColors();
-    this.getRecentlyUsed();
+    this.fetchRecent();
   }
 
   fetchEmojis = async () => {
@@ -28,7 +30,13 @@ class App extends Component {
       'https://raw.githubusercontent.com/carloscuesta/gitmoji/master/src/data/gitmojis.json',
     );
     const { gitmojis } = await res.json();
-    this.setState(({ emojis }) => ({ emojis: [...emojis, ...gitmojis] }));
+
+    this.setState(
+      ({ emojis }) => ({
+        emojis: [...emojis, ...gitmojis],
+      }),
+      this.fetchEmojiColors,
+    );
   };
 
   fetchEmojiColors = async () => {
@@ -42,6 +50,7 @@ class App extends Component {
 
     while (haveResult) {
       const result = variableRe.exec(scss);
+
       if (result == null || result.length < 1) {
         haveResult = false;
       } else {
@@ -57,14 +66,14 @@ class App extends Component {
     this.setState(({ colors }) => ({ colors: [...colors, ...match] }));
   };
 
-  getRecentlyUsed = async () => {
+  fetchRecent = async () => {
     try {
       const { recentEmojis } = await storage.get('recentEmojis');
       if (Array.isArray(recentEmojis)) {
         this.setState(() => ({ recent: recentEmojis }));
       }
-
     } catch (e) {
+      console.error(e.message);
     }
   };
 
@@ -75,7 +84,12 @@ class App extends Component {
     ].slice(0, 5);
 
     this.setState(() => ({ recent }));
-    await storage.set('recentEmojis', recent);
+
+    try {
+      await storage.set('recentEmojis', recent);
+    } catch (e) {
+      console.error(e.message);
+    }
   };
 
   handleChange = ({ target }) => {
@@ -147,9 +161,24 @@ class App extends Component {
           show={copied && showMessage}
           hide={copied && !showMessage}
         />
+
         <Header />
+
         <SearchInput onChange={this.handleChange} value={filter} />
-        <div>Recent: {recent.map(e => <span key={e.code}>{e.code}</span>)}</div>
+
+        {filter.length < 1 && (
+          <RecentPreviewContainer>
+            {recent.map(e => (
+              <RecentPreview
+                key={e.code}
+                emoji={e}
+                color={this.findMatchingColor(e.name)}
+                onClick={() => this.handleClick(e)}
+              />
+            ))}
+          </RecentPreviewContainer>
+        )}
+
         <EmojiPreviewContainer>
           {this.filterEmojis().map(e => (
             <EmojiPreview
@@ -160,6 +189,7 @@ class App extends Component {
             />
           ))}
         </EmojiPreviewContainer>
+
         <footer className="footer">
           <p className="credit">
             Send all love to{' '}
