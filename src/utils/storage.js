@@ -1,11 +1,15 @@
-/* eslint-disable no-undef */
+/* global chrome */
 
 export const get = key =>
   new Promise((resolve, reject) => {
     if (chrome && 'storage' in chrome) {
-      chrome.storage.sync.get(key, items => {
-        resolve(items);
-      });
+      try {
+        chrome.storage.sync.get(key, items => {
+          resolve(items);
+        });
+      } catch (e) {
+        reject(e);
+      }
     } else {
       reject(new Error('No chrome.storage'));
     }
@@ -17,10 +21,10 @@ export const set = (key, value) =>
       try {
         const obj = { [key]: value };
         chrome.storage.sync.set(obj, () => {
-          return resolve();
+          resolve();
         });
       } catch (e) {
-        return reject(e);
+        reject(e);
       }
     } else {
       reject(new Error('No chrome.storage'));
