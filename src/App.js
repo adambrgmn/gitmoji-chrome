@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import * as storage from './utils/storage';
+import SuccessMessage from './components/SuccessMessage';
 import Header from './components/Header';
 import SearchInput from './components/SearchInput';
 import RecentPreview, {
   RecentPreviewContainer,
 } from './components/RecentPreview';
 import EmojiPreview, { EmojiPreviewContainer } from './components/EmojiPreview';
-import SuccessMessage from './components/SuccessMessage';
+import Footer from './components/Footer';
 
 class App extends Component {
   state = {
@@ -200,14 +201,7 @@ class App extends Component {
           ))}
         </EmojiPreviewContainer>
 
-        <footer className="footer">
-          <p className="credit">
-            Send all love to{' '}
-            <a href="https://github.com/carloscuesta/gitmoji/">
-              carloscuesta/gitmoji
-            </a>
-          </p>
-        </footer>
+        <Footer />
       </div>
     );
   }
