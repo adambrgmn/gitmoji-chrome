@@ -122,6 +122,16 @@ class App extends Component {
     } catch (error) {
       this.setState(() => ({ error }));
     }
+
+    try {
+      /* eslint-disable */
+      chrome.tabs.query({ active: true }, tabs => {
+        chrome.tabs.sendMessage(tabs[0].id, { emoji })
+      });
+      /* eslint-enable */
+    } catch (e) {
+      console.error(e.message)
+    }
   };
 
   filterEmojis = () => {
