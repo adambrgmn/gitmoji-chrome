@@ -18,10 +18,10 @@ Go to the [extensions page in Chrome](https://chrome.google.com/webstore/categor
 
 ## Special
 
-One thing is hidden in this package; if you're on Github, GitLab or Bitbucket and you're currently in a text input the copied emoji code will be inserted in the beginning of that input. This is very convinient if you're commiting or merging from the web version and need to add an emoji in the beginning of your message.
+One thing is hidden in this package; if you're on Github, GitLab or Bitbucket and you're currently in a text input the copied emoji code will be inserted in the beginning of that input. This is very convenient if you're commiting or merging from the web version and need to add an emoji in the beginning of your message.
 
 ## Contribution
 
-Contribution is very welcome and feel free to open an issue or submit a PR which we can discuss.
+Contributions are very welcome and feel free to open an issue or submit a PR which we can discuss.
 
 **But be aware that the emojis are fetched dynamically from [carloscuesta/gitmoji](https://github.com/carloscuesta/gitmoji). If you want more (or less) emojis, discuss that there.**
