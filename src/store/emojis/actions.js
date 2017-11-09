@@ -3,6 +3,7 @@ import extractScssVars from '../../utils/extract-scss-vars';
 import mergeWithColors from '../../utils/merge-with-colors';
 import * as storage from '../../utils/storage';
 import { EMOJIS_ADD, EMOJIS_FETCHING, EMOJIS_FETCHED } from './constants';
+import { messageError } from '../messages/actions';
 
 const addEmojis = emojis => ({ type: EMOJIS_ADD, payload: emojis });
 const fetchingEmojis = () => ({ type: EMOJIS_FETCHING });
@@ -24,7 +25,7 @@ const fetchEmojisRemote = () => async dispatch => {
     dispatch(fetchedEmojis());
     await storage.set('gitmoji-emojis', emojis);
   } catch (e) {
-    console.error(e.message);
+    dispatch(messageError(e));
   }
 };
 
@@ -35,7 +36,7 @@ const fetchEmojisLocal = () => async dispatch => {
     dispatch(addEmojis(emojis));
     dispatch(fetchedEmojis());
   } catch (e) {
-    console.error(e.message);
+    dispatch(messageError(e));
   }
 };
 
@@ -45,7 +46,7 @@ const fetchEmojis = () => async dispatch => {
     dispatch(fetchEmojisLocal());
     dispatch(fetchEmojisRemote());
   } catch (e) {
-    console.error(e.message);
+    dispatch(messageError(e));
   }
 };
 
