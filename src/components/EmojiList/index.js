@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchEmojis } from '../../store/emojis/actions';
 import { addRecent } from '../../store/recent/actions';
+import { copy } from '../../store/messages/actions';
 import * as types from '../../propTypes';
 
 import './emojiList.css';
@@ -16,6 +17,7 @@ class EmojiList extends PureComponent {
     filter: PropTypes.string.isRequired,
     fetchEmojis: PropTypes.func.isRequired,
     addRecent: PropTypes.func.isRequired,
+    copy: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -24,6 +26,7 @@ class EmojiList extends PureComponent {
 
   handleClick = emoji => () => {
     this.props.addRecent(emoji);
+    this.props.copy(emoji);
   };
 
   render() {
@@ -59,6 +62,6 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ fetchEmojis, addRecent }, dispatch);
+  bindActionCreators({ fetchEmojis, addRecent, copy }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(EmojiList);
