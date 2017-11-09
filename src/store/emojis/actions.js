@@ -1,6 +1,6 @@
 import fesh from '../../utils/fesh';
 import extractScssVars from '../../utils/extract-scss-vars';
-import mergeWithColors from '../../utils/mergeWithColors';
+import mergeWithColors from '../../utils/merge-with-colors';
 import * as storage from '../../utils/storage';
 import { EMOJIS_ADD, EMOJIS_FETCHING, EMOJIS_FETCHED } from './constants';
 
