@@ -8,6 +8,7 @@ const addRecent = emoji => async (dispatch, getState) => {
   try {
     const action = addRecentAction(emoji);
     dispatch(action);
+
     const recentEmojis = getState().recent;
     await storage.set('gitmoji-recent', recentEmojis);
   } catch (e) {
@@ -18,7 +19,10 @@ const addRecent = emoji => async (dispatch, getState) => {
 const getRecent = () => async dispatch => {
   try {
     const recentEmojis = await storage.get('gitmoji-recent');
-    recentEmojis.map(addRecentAction).forEach(dispatch);
+
+    if (Array.isArray(recentEmojis)) {
+      recentEmojis.map(addRecentAction).forEach(dispatch);
+    }
   } catch (e) {
     dispatch(messageError(e));
   }

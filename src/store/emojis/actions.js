@@ -33,8 +33,10 @@ const fetchEmojisLocal = () => async dispatch => {
   try {
     const emojis = await storage.get('gitmoji-emojis');
 
-    dispatch(addEmojis(emojis));
-    dispatch(fetchedEmojis());
+    if (Array.isArray(emojis)) {
+      dispatch(addEmojis(emojis));
+      dispatch(fetchedEmojis());
+    }
   } catch (e) {
     dispatch(messageError(e));
   }
