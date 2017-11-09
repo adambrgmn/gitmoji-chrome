@@ -22,7 +22,7 @@ const fetchEmojisRemote = () => async dispatch => {
 
     dispatch(addEmojis(emojis));
     dispatch(fetchedEmojis());
-    await storage.set('emojis', emojis);
+    await storage.set('gitmoji-emojis', emojis);
   } catch (e) {
     console.error(e.message);
   }
@@ -30,7 +30,7 @@ const fetchEmojisRemote = () => async dispatch => {
 
 const fetchEmojisLocal = () => async dispatch => {
   try {
-    const emojis = await storage.get('emojis');
+    const emojis = await storage.get('gitmoji-emojis');
 
     dispatch(addEmojis(emojis));
     dispatch(fetchedEmojis());

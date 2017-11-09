@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import Notify from './components/Notify';
 import Header from './components/Header';
 import SearchInput from './components/SearchInput';
-import RecentPreview, {
-  RecentPreviewContainer,
-} from './components/RecentPreview';
+import RecentList from './components/RecentList';
 import EmojiList from './components/EmojiList';
 import Footer from './components/Footer';
 import * as message from './utils/message';
@@ -80,7 +78,7 @@ class App extends Component {
   };
 
   render() {
-    const { recent, filter, messages } = this.state;
+    const { filter, messages } = this.state;
 
     return (
       <div className="container">
@@ -89,20 +87,8 @@ class App extends Component {
         <Header />
 
         <SearchInput onChange={this.handleChange} value={filter} />
-
-        {filter.length < 1 && (
-            <RecentPreviewContainer>
-              {recent.map(e => (
-                <RecentPreview
-                  key={e.code}
-                  emoji={e}
-                  color={this.findMatchingColor(e.name)}
-                  onClick={() => this.handleClick(e)}
-                />
-              ))}
-            </RecentPreviewContainer>
-          )}
-
+        
+        <RecentList />
         <EmojiList />
 
         <Footer />

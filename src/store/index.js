@@ -1,9 +1,10 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import emojis from './emojis';
+import recent from './recent';
 
 const initStore = () => {
-  const reducer = combineReducers({ emojis });
+  const reducer = combineReducers({ emojis, recent });
   const middleware = [thunk];
 
   const composeEnhancers =

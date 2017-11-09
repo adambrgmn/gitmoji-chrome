@@ -1,5 +1,6 @@
-import unique from '../../utils/unique';
 import { EMOJIS_ADD, EMOJIS_FETCHING, EMOJIS_FETCHED } from './constants';
+import uniqWith from 'lodash/uniqWith';
+import isEqual from 'lodash/isEqual';
 
 const initialState = {
   items: [],
@@ -11,7 +12,7 @@ const emojis = (state = initialState, action) => {
     case EMOJIS_ADD:
       return {
         ...state,
-        items: unique([...state.items, ...action.payload]),
+        items: uniqWith([...state.items, ...action.payload], isEqual),
       };
 
     case EMOJIS_FETCHING:
