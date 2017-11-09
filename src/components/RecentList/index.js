@@ -32,17 +32,16 @@ class RecentList extends PureComponent {
 
     return (
       <RecentPreviewContainer>
-        {recents.map(
-          (emoji, i) =>
-            emoji != null ? (
-              <RecentPreview
-                key={emoji.code}
-                emoji={emoji}
-                onClick={this.handleClick}
-              />
-            ) : (
-              <RecentPreviewEmpty disable key={i} />
-            ),
+        {recents.map((emoji, i) =>
+          emoji != null ? (
+            <RecentPreview
+              key={emoji.code}
+              emoji={emoji}
+              onClick={this.handleClick}
+            />
+          ) : (
+            <RecentPreviewEmpty disable key={i} />
+          ),
         )}
       </RecentPreviewContainer>
     );
@@ -53,4 +52,7 @@ const mapStateToProps = state => ({ emojis: uniqRecentSelector(state) });
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ ...actions, copy }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(RecentList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(RecentList);

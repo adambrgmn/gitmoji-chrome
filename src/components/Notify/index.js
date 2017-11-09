@@ -134,4 +134,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ removeMessage }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Notify);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Notify);

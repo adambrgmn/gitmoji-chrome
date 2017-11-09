@@ -56,4 +56,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ fetchEmojis, addRecent, copy }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmojiList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EmojiList);
