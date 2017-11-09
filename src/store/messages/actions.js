@@ -1,5 +1,6 @@
 import { MESSAGE_SUCCESS, MESSAGE_ERROR, MESSAGE_REMOVE } from './constants';
 import * as clipboard from '../../utils/clipboard';
+import { send } from '../../utils/message';
 
 const messageSuccess = ({ message, icon }) => {
   const action = {
@@ -35,7 +36,7 @@ const messageError = ({ message, icon }) => {
 
 const removeMessage = message => ({ type: MESSAGE_REMOVE, payload: message });
 
-const copy = emoji => dispatch => {
+const copy = emoji => async dispatch => {
   try {
     const success = clipboard.copy(emoji.code);
 
@@ -51,6 +52,12 @@ const copy = emoji => dispatch => {
   } catch (e) {
     const { message, icon } = e;
     dispatch(messageError({ message, icon }));
+  }
+
+  try {
+    await send({ emoji });
+  } catch (e) {
+    return;
   }
 };
 
