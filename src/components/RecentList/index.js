@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as types from '../../propTypes';
 import * as actions from '../../store/recent/actions';
+import { copy } from '../../store/messages/actions';
 
 import './recentList.css';
 import RecentPreviewContainer from './RecentPreviewContainer';
@@ -13,6 +14,7 @@ import RecentEmpty from './RecentEmpty';
 class RecentList extends PureComponent {
   static propTypes = {
     emojis: PropTypes.arrayOf(types.emoji).isRequired,
+    copy: PropTypes.func.isRequired,
     addRecent: PropTypes.func.isRequired,
     getRecent: PropTypes.func.isRequired,
   };
@@ -21,9 +23,10 @@ class RecentList extends PureComponent {
     this.props.getRecent();
   }
 
-  handleClick = (emoji) => () => {
+  handleClick = emoji => () => {
     this.props.addRecent(emoji);
-  }
+    this.props.copy(emoji);
+  };
 
   render() {
     const { emojis } = this.props;
@@ -49,6 +52,7 @@ class RecentList extends PureComponent {
 }
 
 const mapStateToProps = state => ({ emojis: state.recent });
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ ...actions, copy }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecentList);
