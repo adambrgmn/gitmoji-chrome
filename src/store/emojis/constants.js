@@ -1,3 +1,0 @@
-export const EMOJIS_ADD = 'EMOJIS_ADD';
-export const EMOJIS_FETCHING = 'EMOJIS_FETCHING';
-export const EMOJIS_FETCHED = 'EMOJIS_FETCHED';
