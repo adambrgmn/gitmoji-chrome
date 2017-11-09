@@ -5,7 +5,7 @@ export const get = key =>
     if (chrome && 'storage' in chrome) {
       try {
         chrome.storage.sync.get(key, items => {
-          resolve(items);
+          resolve(items[key]);
         });
       } catch (e) {
         reject(e);
