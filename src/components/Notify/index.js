@@ -1,57 +1,46 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import uniqWith from 'lodash/uniqWith';
-import isEqual from 'lodash/isEqual';
-
 import './notify.css';
-import * as constants from '../../store/messages/constants';
-import { removeMessage } from '../../store/messages/actions';
 
-class Notify extends Component {
+export default class Notify extends Component {
   static propTypes = {
     messages: PropTypes.arrayOf(
       PropTypes.shape({
-        type: PropTypes.oneOf(Object.keys(constants)).isRequired,
+        type: PropTypes.oneOf(['error', 'standard']).isRequired,
         message: PropTypes.string.isRequired,
-        icon: PropTypes.string,
+        emoji: PropTypes.string,
       }),
     ).isRequired,
-    removeMessage: PropTypes.func.isRequired,
   };
 
-  handleAnimationEnd = msg => () => {
-    this.props.removeMessage(msg);
+  handleAnimationEnd = msg => e => {
+    console.log(msg);
+  };
+
+  getMessages = () => {
+    const { messages } = this.props;
+    return messages.filter((m, i) => {
+      const slice = messages.slice(i + 1);
+      const duplicate = slice.findIndex(s => s.message === m.message) > -1;
+
+      return !duplicate;
+    });
   };
 
   render() {
-    const { messages } = this.props;
     return (
       <div className="notify-container">
-        {messages.map((msg, i) => (
+        {this.getMessages().map(msg => (
           <div
             key={msg.message}
-            style={{
-              top: `calc((20vw + var(--scale-0)) * ${i} + var(--scale-0))`,
-            }}
-            className={`notify-message notify-${msg.type}`}
+            className={`notify-message notify-${msg.type || 'standard'}`}
             onAnimationEnd={this.handleAnimationEnd(msg)}
           >
-            <span className="notify-message-emoji">{msg.icon || '🐛'}</span>
-            <span className="notify-message-message">{msg.message}</span>
+            <span className="notify-message-emoji">{msg.emoji || '🐛'}</span>
+            {msg.message}
           </div>
         ))}
       </div>
     );
   }
 }
-
-const mapStateToProps = state => ({
-  messages: uniqWith(state.messages, isEqual),
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ removeMessage }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Notify);
