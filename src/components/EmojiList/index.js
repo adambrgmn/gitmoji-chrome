@@ -13,6 +13,7 @@ import EmojiPreview from './EmojiPreview';
 class EmojiList extends PureComponent {
   static propTypes = {
     emojis: PropTypes.arrayOf(types.emoji).isRequired,
+    filter: PropTypes.string.isRequired,
     fetchEmojis: PropTypes.func.isRequired,
     addRecent: PropTypes.func.isRequired,
   };
@@ -23,7 +24,7 @@ class EmojiList extends PureComponent {
 
   handleClick = emoji => () => {
     this.props.addRecent(emoji);
-  }
+  };
 
   render() {
     const { emojis } = this.props;
@@ -41,9 +42,21 @@ class EmojiList extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  emojis: state.emojis.items,
-});
+const includes = (str, match) => {
+  return str.toLowerCase().includes(match.toLowerCase());
+};
+
+const mapStateToProps = (state, props) => {
+  const { filter } = props;
+  const { items } = state.emojis;
+  return {
+    emojis: filter
+      ? items.filter(
+          e => includes(e.description, filter) || includes(e.code, filter),
+        )
+      : items,
+  };
+};
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ fetchEmojis, addRecent }, dispatch);
