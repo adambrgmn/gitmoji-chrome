@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Notify from './components/Notify';
 import Header from './components/Header';
 import SearchInput from './components/SearchInput';
 import RecentList from './components/RecentList';
@@ -22,6 +23,7 @@ class App extends Component {
 
     return (
       <div className="container">
+        <Notify />
         <Header />
         <SearchInput onChange={this.handleChange} value={filter} />
         <RecentList />

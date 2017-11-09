@@ -1,4 +1,4 @@
-import { MESSAGE_SUCCESS, MESSAGE_ERROR } from './constants';
+import { MESSAGE_SUCCESS, MESSAGE_ERROR, MESSAGE_REMOVE } from './constants';
 import * as clipboard from '../../utils/clipboard';
 
 const messageSuccess = ({ message, icon }) => {
@@ -33,6 +33,8 @@ const messageError = ({ message, icon }) => {
   return action;
 };
 
+const removeMessage = message => ({ type: MESSAGE_REMOVE, payload: message });
+
 const copy = emoji => dispatch => {
   try {
     const success = clipboard.copy(emoji.code);
@@ -52,4 +54,4 @@ const copy = emoji => dispatch => {
   }
 };
 
-export { messageError, messageSuccess, copy };
+export { messageError, messageSuccess, removeMessage, copy };
