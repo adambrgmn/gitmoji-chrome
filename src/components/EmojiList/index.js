@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import fuzz from 'fuzzaldrin-plus';
 import { fetchEmojis } from '../../store/emojis/actions';
 import { addRecent } from '../../store/recent/actions';
 import { copy } from '../../store/messages/actions';
