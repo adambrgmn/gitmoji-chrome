@@ -1,4 +1,4 @@
-export default scss => {
+const extract = scss => {
   const variableRe = /((\w|-)+): \$(\w+),/g;  
   const match = [];
   let haveResult = true;
@@ -20,3 +20,5 @@ export default scss => {
 
   return match;
 };
+
+export { extract as default };

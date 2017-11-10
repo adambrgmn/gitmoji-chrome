@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class Link extends Component {
+class Link extends Component {
   static propTypes = {
     href: PropTypes.string.isRequired,
     className: PropTypes.string,
@@ -26,3 +26,5 @@ export default class Link extends Component {
     );
   }
 }
+
+export { Link as default };

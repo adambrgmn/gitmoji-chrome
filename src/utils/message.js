@@ -1,6 +1,6 @@
 /* global chrome */
 
-export const send = message =>
+const send = message =>
   new Promise((resolve, reject) => {
     try {
       chrome.tabs.query({ active: true }, tabs => {
@@ -10,3 +10,5 @@ export const send = message =>
       reject(e);
     }
   });
+
+export { send };
