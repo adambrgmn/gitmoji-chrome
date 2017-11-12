@@ -13,10 +13,10 @@ const recent = (state = initialState, action) => {
   switch (action.type) {
     case RECENT_ADD:
       return takeRecent([action.payload, ...state]);
-      
+
     default:
       return state;
   }
-}
+};
 
 export { recent as default };

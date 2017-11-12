@@ -1,5 +1,5 @@
 const extract = scss => {
-  const variableRe = /((\w|-)+): \$(\w+),/g;  
+  const variableRe = /((\w|-)+): \$(\w+),/g;
   const match = [];
   let haveResult = true;
 

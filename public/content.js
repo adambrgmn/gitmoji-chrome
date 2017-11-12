@@ -3,7 +3,7 @@ chrome.extension.onMessage.addListener((message, sender, sendResponse) => {
   try {
     const { code } = message.emoji;
     const el = document.activeElement;
-    
+
     if (el && el.type === 'text') {
       el.value = `${code} ${el.value}`;
     }
