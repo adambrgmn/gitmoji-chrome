@@ -1,10 +1,12 @@
 import React from 'react';
 import Logotype from '../Logotype';
 import styled from 'styled-components';
+import { modularScale } from 'polished';
+import { color } from '../../style/theme';
 
 const HeaderContainer = styled.header`
-  padding: var(--scale-1);
-  background-color: var(--color-yellow);
+  padding: ${modularScale(1)};
+  background-color: ${color.yellow};
 `;
 
 function Header() {

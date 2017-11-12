@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { color } from '../../style/theme';
 
 const Container = styled.div`
   width: 100%;
@@ -13,7 +14,7 @@ const Svg = styled.svg`
 `;
 
 const SmileyBase = styled.path`
-  fill: var(--color-yellow);
+  fill: ${color.yellow};
 `;
 
 const SmileyGlasses = styled.path`

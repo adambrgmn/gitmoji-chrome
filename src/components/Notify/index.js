@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled, { keyframes } from 'styled-components';
+import { modularScale } from 'polished';
 import uniqWith from 'lodash/uniqWith';
 import isEqual from 'lodash/isEqual';
 import * as constants from '../../store/messages/constants';
 import { removeMessage } from '../../store/messages/actions';
+import { color, zIndex } from '../../style/theme';
 
 const animationBounceInOut = keyframes`
   0% {
@@ -57,34 +59,32 @@ const NotifyMessage = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  top: var(--scale-0);
-  left: var(--scale-0);
-  width: calc(100vw - (2 * var(--scale-0)));
+  top: ${modularScale(0)};
+  left: ${modularScale(0)};
+  width: calc(100vw - (2 * ${modularScale(0)}));
   height: 20vw;
   border-radius: 4px;
   font-weight: 500;
-  color: var(--color-white);
+  color: ${color.white};
   box-shadow: 0 25px 10px -15px rgba(0, 0, 0, 0.05);
-  z-index: var(--zi3);
+  z-index: ${zIndex.three};
   animation-duration: 5s;
   animation-fill-mode: both;
   animation-name: ${animationBounceInOut};
 
   background-color: ${props =>
-    props.type === constants.MESSAGE_SUCCESS
-      ? 'var(--color-pink)'
-      : 'var(--color-orange)'};
+    props.type === constants.MESSAGE_SUCCESS ? color.pink : color.orange};
 `;
 
 const NotifyMessageEmoji = styled.span`
   min-width: 20vw;
-  font-size: var(--scale-1);
+  font-size: ${modularScale(1)};
   text-align: center;
 `;
 
 const NotifyMessageText = styled.span`
   width: 100%;
-  padding-right: var(--scale-0);
+  padding-right: ${modularScale(0)};
   text-align: center;
 `;
 
@@ -113,7 +113,9 @@ class Notify extends Component {
             key={msg.message}
             type={msg.type}
             style={{
-              top: `calc((20vw + var(--scale-0)) * ${i} + var(--scale-0))`,
+              top: `calc((20vw + ${modularScale(0)}) * ${i} + ${modularScale(
+                0,
+              )})`,
             }}
             onAnimationEnd={this.handleAnimationEnd(msg)}
           >

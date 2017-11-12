@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import * as types from '../../propTypes';
+import { modularScale, opacify } from 'polished';
+import { color } from '../../style/theme';
+import { transition } from '../../style/utils';
 
 const RecentPreviewBtn = styled.button`
   position: relative;
@@ -11,13 +14,13 @@ const RecentPreviewBtn = styled.button`
   border-radius: 4px;
   padding: 0;
   padding-top: 100%;
-  font-size: var(--scale-0);
-  box-shadow: 0 1px 2px 0 rgba(168, 182, 191, 0.6);
-  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+  font-size: ${modularScale(1)};
+  box-shadow: 0 1px 2px 0 ${opacify(0.6, color.shadow)};
+  ${transition('box-shadow', 'transform')};
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0 4px 8px 0 rgba(168, 182, 191, 0.6);
+    box-shadow: 0 4px 8px 0 ${opacify(0.6, color.shadow)};
     transform: translateY(-3px);
   }
 
@@ -62,7 +65,7 @@ const RecentPreviewEmpty = RecentPreviewBtn.extend`
   cursor: initial;
 
   &:hover {
-    box-shadow: 0 1px 2px 0 rgba(168, 182, 191, 0.6);
+    box-shadow: 0 1px 2px 0 ${opacify(0.6, color.shadow)};
     transform: translateY(0);
   }
 
@@ -73,7 +76,7 @@ const RecentPreviewEmpty = RecentPreviewBtn.extend`
     left: 0;
     width: 100%;
     height: 100%;
-    border: 1px dashed var(--color-grey);
+    border: 1px dashed ${color.grey};
     border-radius: 4px;
   }
 `;

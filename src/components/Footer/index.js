@@ -1,11 +1,14 @@
 import React from 'react';
 import Link from '../Link';
 import styled from 'styled-components';
+import { modularScale } from 'polished';
+import { color } from '../../style/theme';
 
 const FooterContainer = styled.footer`
   width: 100%;
-  padding: var(--scale-1);
-  font-size: var(--scale--1);
+  padding: ${modularScale(1)};
+  padding-bottom: ${modularScale(4)};
+  font-size: ${modularScale(-1)};
 `;
 
 const FooterCredit = styled.p`
@@ -14,7 +17,7 @@ const FooterCredit = styled.p`
 `;
 
 const FooterLink = styled(Link)`
-  color: var(--color-pink);
+  color: ${color.pink};
   text-decoration: none;
 `;
 
