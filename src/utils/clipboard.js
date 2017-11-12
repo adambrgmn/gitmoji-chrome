@@ -1,4 +1,4 @@
-export const copy = str => {
+const copy = str => {
   const textarea = document.createElement('textarea');
   textarea.value = str;
   document.body.append(textarea);
@@ -9,3 +9,5 @@ export const copy = str => {
 
   return success;
 };
+
+export { copy };

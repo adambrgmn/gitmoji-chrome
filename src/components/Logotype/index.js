@@ -1,7 +1,7 @@
 import React from 'react';
 import './logotype.css';
 
-export default function Logotype() {
+function Logotype() {
   return (
     <div className="logotype-container">
       <svg className="logotype-svg" viewBox="0 0 457 137">
@@ -33,3 +33,5 @@ export default function Logotype() {
     </div>
   );
 }
+
+export { Logotype as default };
