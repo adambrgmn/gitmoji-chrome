@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import debounce from 'lodash/debounce';
 import Notify from './components/Notify';
 import Header from './components/Header';
@@ -6,6 +7,10 @@ import SearchInput from './components/SearchInput';
 import RecentList from './components/RecentList';
 import EmojiList from './components/EmojiList';
 import Footer from './components/Footer';
+
+const Container = styled.div`
+  position: relative;
+`;
 
 class App extends Component {
   state = { filter: '', value: '' };
@@ -26,14 +31,14 @@ class App extends Component {
     const { filter, value } = this.state;
 
     return (
-      <div className="container">
+      <Container>
         <Notify />
         <Header />
         <SearchInput onChange={this.handleChange} value={value} />
         <RecentList />
         <EmojiList filter={filter} />
         <Footer />
-      </div>
+      </Container>
     );
   }
 }

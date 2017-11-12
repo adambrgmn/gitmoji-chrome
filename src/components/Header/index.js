@@ -1,12 +1,19 @@
 import React from 'react';
 import Logotype from '../Logotype';
-import './header.css';
+import styled from 'styled-components';
+import { modularScale } from 'polished';
+import { color } from '../../style/theme';
+
+const HeaderContainer = styled.header`
+  padding: ${modularScale(1)};
+  background-color: ${color.yellow};
+`;
 
 function Header() {
   return (
-    <header className="header">
+    <HeaderContainer>
       <Logotype />
-    </header>
+    </HeaderContainer>
   );
 }
 
