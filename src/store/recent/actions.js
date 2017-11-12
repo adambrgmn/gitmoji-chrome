@@ -2,6 +2,8 @@ import { RECENT_ADD } from './constants';
 import * as storage from '../../utils/storage';
 import { messageError } from '../messages/actions';
 
+const STORAGE_KEY = `${process.env.REACT_APP_STORAGE_KEY_PREFIX}-recent`;
+
 const addRecentAction = emoji => ({ type: RECENT_ADD, payload: emoji });
 
 const addRecent = emoji => async (dispatch, getState) => {
@@ -10,7 +12,7 @@ const addRecent = emoji => async (dispatch, getState) => {
     dispatch(action);
 
     const recentEmojis = getState().recent;
-    await storage.set('gitmoji-recent', recentEmojis);
+    await storage.set(STORAGE_KEY, recentEmojis);
   } catch (e) {
     dispatch(messageError(e));
   }
@@ -18,7 +20,7 @@ const addRecent = emoji => async (dispatch, getState) => {
 
 const getRecent = () => async dispatch => {
   try {
-    const recentEmojis = await storage.get('gitmoji-recent');
+    const recentEmojis = await storage.get(STORAGE_KEY);
 
     if (Array.isArray(recentEmojis)) {
       recentEmojis.map(addRecentAction).forEach(dispatch);

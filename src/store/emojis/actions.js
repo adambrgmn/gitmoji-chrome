@@ -5,25 +5,22 @@ import * as storage from '../../utils/storage';
 import { EMOJIS_ADD, EMOJIS_FETCHING, EMOJIS_FETCHED } from './constants';
 import { messageError } from '../messages/actions';
 
+const STORAGE_KEY = `${process.env.REACT_APP_STORAGE_KEY_PREFIX}-emojis`;
+
 const addEmojis = emojis => ({ type: EMOJIS_ADD, payload: emojis });
 const fetchingEmojis = () => ({ type: EMOJIS_FETCHING });
 const fetchedEmojis = () => ({ type: EMOJIS_FETCHED });
 
 const fetchEmojisRemote = () => async dispatch => {
   try {
-    const { gitmojis } = await fesh(
-      'https://raw.githubusercontent.com/carloscuesta/gitmoji/master/src/data/gitmojis.json',
-    );
-    const scss = await fesh(
-      'https://raw.githubusercontent.com/carloscuesta/gitmoji/master/src/styles/_includes/_vars.scss',
-      'text',
-    );
+    const { gitmojis } = await fesh(process.env.REACT_APP_GITMOJI_URL);
+    const scss = await fesh(process.env.REACT_APP_GITMOJI_COLORS_URL, 'text');
     const colors = extractScssVars(scss);
     const emojis = mergeArray('name', gitmojis, colors);
 
     dispatch(addEmojis(emojis));
     dispatch(fetchedEmojis());
-    await storage.set('gitmoji-emojis', emojis);
+    await storage.set(STORAGE_KEY, emojis);
   } catch (e) {
     dispatch(messageError(e));
   }
@@ -31,7 +28,7 @@ const fetchEmojisRemote = () => async dispatch => {
 
 const fetchEmojisLocal = () => async dispatch => {
   try {
-    const emojis = await storage.get('gitmoji-emojis');
+    const emojis = await storage.get(STORAGE_KEY);
 
     if (Array.isArray(emojis)) {
       dispatch(addEmojis(emojis));
