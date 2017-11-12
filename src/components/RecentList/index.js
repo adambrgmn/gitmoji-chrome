@@ -5,11 +5,8 @@ import { connect } from 'react-redux';
 import * as types from '../../propTypes';
 import * as actions from '../../store/recent/actions';
 import { copy } from '../../store/messages/actions';
-
-import './recentList.css';
 import RecentPreviewContainer from './RecentPreviewContainer';
-import RecentPreview from './RecentPreview';
-import RecentEmpty from './RecentEmpty';
+import { RecentPreview, RecentPreviewEmpty } from './RecentPreview';
 
 class RecentList extends PureComponent {
   static propTypes = {
@@ -43,7 +40,7 @@ class RecentList extends PureComponent {
                 onClick={this.handleClick(emoji)}
               />
             ) : (
-              <RecentEmpty key={i} />
+              <RecentPreviewEmpty disable key={i} />
             ),
         )}
       </RecentPreviewContainer>
