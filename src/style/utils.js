@@ -9,9 +9,8 @@ const transition = (...props: TransitionProps[]) => css`
         return `${p} 0.3s ${timingFunctions('easeInOutSine')}`;
       }
 
-      return `${
-        p.prop
-      } ${p.duration || '0.3s'} ${p.timing || timingFunctions('easeInOutSine')}`;
+      return `${p.prop} ${p.duration || '0.3s'} ${p.timing ||
+        timingFunctions('easeInOutSine')}`;
     }),
   )};
   will-change: ${props

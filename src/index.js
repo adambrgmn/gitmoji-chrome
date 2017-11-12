@@ -26,3 +26,24 @@ if (rootEl != null) {
     rootEl,
   );
 }
+
+injectGlobal`
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-size: 16px;
+  }
+
+  body {
+    min-width: 20rem;
+    margin: 0;
+    padding: 0;
+    font-family: ${font.body};
+    font-size: ${modularScale(0)};
+    background-color: ${color.bg};
+  }
+`;

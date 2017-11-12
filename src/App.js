@@ -13,6 +13,10 @@ const Container = styled.div`
   position: relative;
 `;
 
+const Container = styled.div`
+  position: relative;
+`;
+
 class App extends Component {
   state = { filter: '', value: '' };
 
