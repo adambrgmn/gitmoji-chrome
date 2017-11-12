@@ -1,17 +1,33 @@
 import React from 'react';
 import Link from '../Link';
-import './footer.css';
+import styled from 'styled-components';
+
+const FooterContainer = styled.footer`
+  width: 100%;
+  padding: var(--scale-1);
+  font-size: var(--scale--1);
+`;
+
+const FooterCredit = styled.p`
+  margin: 0;
+  text-align: center;
+`;
+
+const FooterLink = styled(Link)`
+  color: var(--color-pink);
+  text-decoration: none;
+`;
 
 function Footer() {
   return (
-    <footer className="footer">
-      <p className="credit">
+    <FooterContainer>
+      <FooterCredit>
         Send all love to{' '}
-        <Link href="https://github.com/carloscuesta/gitmoji/">
+        <FooterLink href="https://github.com/carloscuesta/gitmoji/">
           carloscuesta/gitmoji
-        </Link>
-      </p>
-    </footer>
+        </FooterLink>
+      </FooterCredit>
+    </FooterContainer>
   );
 }
 

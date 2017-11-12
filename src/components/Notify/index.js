@@ -2,12 +2,91 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import styled, { keyframes } from 'styled-components';
 import uniqWith from 'lodash/uniqWith';
 import isEqual from 'lodash/isEqual';
-
-import './notify.css';
 import * as constants from '../../store/messages/constants';
 import { removeMessage } from '../../store/messages/actions';
+
+const animationBounceInOut = keyframes`
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -3000px, 0);
+  }
+
+  10% {
+    opacity: 1;
+    transform: translate3d(0, 25px, 0);
+  }
+
+  15% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  17% {
+    transform: translate3d(0, 5px, 0);
+  }
+
+  20%,
+  79% {
+    transform: none;
+  }
+
+  80% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  90%,
+  95% {
+    opacity: 1;
+    transform: translate3d(0, 20px, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(0, -300px, 0);
+  }
+`;
+
+const NotifyContainer = styled.div`
+  width: 100%;
+`;
+
+const NotifyMessage = styled.div`
+  position: fixed;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  top: var(--scale-0);
+  left: var(--scale-0);
+  width: calc(100vw - (2 * var(--scale-0)));
+  height: 20vw;
+  border-radius: 4px;
+  font-weight: 500;
+  color: var(--color-white);
+  box-shadow: 0 25px 10px -15px rgba(0, 0, 0, 0.05);
+  z-index: var(--zi3);
+  animation-duration: 5s;
+  animation-fill-mode: both;
+  animation-name: ${animationBounceInOut};
+
+  background-color: ${props =>
+    props.type === constants.MESSAGE_SUCCESS
+      ? 'var(--color-pink)'
+      : 'var(--color-orange)'};
+`;
+
+const NotifyMessageEmoji = styled.span`
+  min-width: 20vw;
+  font-size: var(--scale-1);
+  text-align: center;
+`;
+
+const NotifyMessageText = styled.span`
+  width: 100%;
+  padding-right: var(--scale-0);
+  text-align: center;
+`;
 
 class Notify extends Component {
   static propTypes = {
@@ -28,21 +107,21 @@ class Notify extends Component {
   render() {
     const { messages } = this.props;
     return (
-      <div className="notify-container">
+      <NotifyContainer>
         {messages.map((msg, i) => (
-          <div
+          <NotifyMessage
             key={msg.message}
+            type={msg.type}
             style={{
               top: `calc((20vw + var(--scale-0)) * ${i} + var(--scale-0))`,
             }}
-            className={`notify-message notify-${msg.type}`}
             onAnimationEnd={this.handleAnimationEnd(msg)}
           >
-            <span className="notify-message-emoji">{msg.icon || '🐛'}</span>
-            <span className="notify-message-message">{msg.message}</span>
-          </div>
+            <NotifyMessageEmoji>{msg.icon || '🐛'}</NotifyMessageEmoji>
+            <NotifyMessageText>{msg.message}</NotifyMessageText>
+          </NotifyMessage>
         ))}
-      </div>
+      </NotifyContainer>
     );
   }
 }

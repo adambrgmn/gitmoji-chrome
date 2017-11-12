@@ -7,8 +7,6 @@ import { fetchEmojis } from '../../store/emojis/actions';
 import { addRecent } from '../../store/recent/actions';
 import { copy } from '../../store/messages/actions';
 import * as types from '../../propTypes';
-
-import './emojiList.css';
 import EmojiPreviewContainer from './EmojiPreviewContainer';
 import EmojiPreview from './EmojiPreview';
 
