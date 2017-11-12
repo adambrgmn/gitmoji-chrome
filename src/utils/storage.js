@@ -1,6 +1,6 @@
 /* global chrome */
 
-export const get = key =>
+const get = key =>
   new Promise((resolve, reject) => {
     if (chrome && 'storage' in chrome) {
       try {
@@ -15,7 +15,7 @@ export const get = key =>
     }
   });
 
-export const set = (key, value) =>
+const set = (key, value) =>
   new Promise((resolve, reject) => {
     if (chrome && 'storage' in chrome) {
       try {
@@ -30,3 +30,5 @@ export const set = (key, value) =>
       reject(new Error('No chrome.storage'));
     }
   });
+
+export { get, set };

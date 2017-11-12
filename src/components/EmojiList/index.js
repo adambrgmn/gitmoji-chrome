@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import fuzz from 'fuzzaldrin-plus';
 import { fetchEmojis } from '../../store/emojis/actions';
 import { addRecent } from '../../store/recent/actions';
 import { copy } from '../../store/messages/actions';
@@ -45,19 +46,20 @@ class EmojiList extends PureComponent {
   }
 }
 
-const includes = (str, match) => {
-  return str.toLowerCase().includes(match.toLowerCase());
+const fuzzyFilter = (items, input) => {
+  const updatedItems = items.map(i => ({
+    ...i,
+    filterKey: `${i.emoji} ${i.code} ${i.description}`,
+  }));
+  const filtered = fuzz.filter(updatedItems, input, { key: 'filterKey' });
+  return filtered;
 };
 
 const mapStateToProps = (state, props) => {
   const { filter } = props;
   const { items } = state.emojis;
   return {
-    emojis: filter
-      ? items.filter(
-          e => includes(e.description, filter) || includes(e.code, filter),
-        )
-      : items,
+    emojis: filter ? fuzzyFilter(items, filter) : items,
   };
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import Link from '../Link';
 import './footer.css';
 
-export default function Footer() {
+function Footer() {
   return (
     <footer className="footer">
       <p className="credit">
@@ -14,3 +14,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+export { Footer as default };
