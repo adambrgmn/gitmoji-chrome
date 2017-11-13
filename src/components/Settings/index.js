@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { modularScale } from 'polished';
 import SettingsContainer from './SettingsContainer';
 import Stats from '../Stats';
+import Footer from '../Footer';
 import { toggleSettings } from '../../store/settings/actions';
 import { messageSuccess, messageError } from '../../store/messages/actions';
 import { resetState } from '../../store/actions';
@@ -35,6 +36,10 @@ const FormGroup = styled.div`
   border-bottom: 1px solid ${color.black};
   padding: ${modularScale(2)} 0;
   font-family: ${font.body};
+
+  &:last-child {
+    border-bottom: none;
+  }
 `;
 
 const FormGroupButton = styled.button`
@@ -108,6 +113,10 @@ class Settings extends PureComponent {
 
         <FormGroup>
           <Stats />
+        </FormGroup>
+
+        <FormGroup>
+          <Footer />
         </FormGroup>
       </SettingsContainer>,
 
