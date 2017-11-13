@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { modularScale, opacify } from 'polished';
+import { modularScale } from 'polished';
 import { color, font } from '../../style/theme';
-import { transition } from '../../style/utils';
+import { transition, boxShadow } from '../../style/utils';
 import * as types from '../../propTypes';
 
 const EmojiCard = styled.li`
@@ -15,14 +15,16 @@ const EmojiCard = styled.li`
   margin-bottom: ${modularScale(0)};
   border-radius: 4px;
   background-color: ${color.white};
-  box-shadow: 0 1px 2px 0 ${opacify(0.6, color.shadow)};
   list-style: none;
   overflow: hidden;
-  ${transition('box-shadow', 'transform')} &:hover {
-    box-shadow: 0 4px 8px 0 ${opacify(0.6, color.shadow)};
+  cursor: pointer;
+
+  &:hover {
     transform: translateY(-3px);
-    cursor: pointer;
   }
+
+  ${boxShadow(true)};
+  ${transition('box-shadow', 'transform')};
 `;
 
 const EmojiCardHeader = styled.header`

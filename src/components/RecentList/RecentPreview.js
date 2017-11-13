@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import * as types from '../../propTypes';
 import { modularScale, opacify } from 'polished';
 import { color } from '../../style/theme';
-import { transition } from '../../style/utils';
+import { transition, boxShadow } from '../../style/utils';
 
 const RecentPreviewBtn = styled.button`
   position: relative;
@@ -15,18 +15,18 @@ const RecentPreviewBtn = styled.button`
   padding: 0;
   padding-top: 100%;
   font-size: ${modularScale(1)};
-  box-shadow: 0 1px 2px 0 ${opacify(0.6, color.shadow)};
-  ${transition('box-shadow', 'transform')};
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0 4px 8px 0 ${opacify(0.6, color.shadow)};
     transform: translateY(-3px);
   }
 
   &:focus {
     outline: none;
   }
+
+  ${transition('box-shadow', 'transform')};
+  ${boxShadow(true)};
 `;
 
 const RecentEmoji = styled.span`
