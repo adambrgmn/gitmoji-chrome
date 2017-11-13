@@ -9,10 +9,11 @@ import { color } from '../../style/theme';
 
 const Container = styled.div`
   width: 100%;
-  padding: ${modularScale(0)};
 `;
 
 const Title = styled.h2`
+  margin: 0;
+  margin-bottom: ${modularScale(0)};
   font-size: ${modularScale(0)};
   font-weight: 400;
 `;
@@ -33,6 +34,17 @@ const BarContainer = styled.li`
   width: 100%;
   height: 100%;
   font-size: ${modularScale(-1)};
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px dashed ${color.grey};
+    border-radius: 4px;
+  }
 `;
 
 const Bar = styled.div`
@@ -57,26 +69,30 @@ const BarText = styled.p`
 
 const Stats = ({ stats }) => {
   const highest = stats.length > 0 ? stats[0].total : 1;
+  const arr = [...stats, ...Array.from({ length: 5 - stats.length })];
+
   return (
     <Container>
       <Title>Most used emojis:</Title>
-      {stats.length > 0 && (
-        <BarsContainer>
-          {stats.map(stat => (
-            <BarContainer key={stat.code}>
+      <BarsContainer>
+        {arr.map((stat, i) => (
+          <BarContainer key={stat ? stat.code : i}>
+            {stat != null && (
               <Bar
                 style={{
                   transform: `scaleY(${stat.total / highest})`,
                   backgroundColor: stat.color,
                 }}
               />
+            )}
+            {stat != null && (
               <BarText>
                 {stat.emoji} {stat.total}
               </BarText>
-            </BarContainer>
-          ))}
-        </BarsContainer>
-      )}
+            )}
+          </BarContainer>
+        ))}
+      </BarsContainer>
     </Container>
   );
 };
