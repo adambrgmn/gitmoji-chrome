@@ -11,7 +11,8 @@ const get = key =>
         reject(e);
       }
     } else {
-      reject(new Error('No chrome.storage'));
+      const item = window.localStorage.getItem(key);
+      resolve(item ? JSON.parse(item) : null);
     }
   });
 
@@ -27,7 +28,9 @@ const set = (key, value) =>
         reject(e);
       }
     } else {
-      reject(new Error('No chrome.storage'));
+      const item = JSON.stringify(value);
+      window.localStorage.setItem(key, item);
+      resolve();
     }
   });
 
