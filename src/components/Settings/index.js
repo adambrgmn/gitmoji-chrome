@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import styled from 'styled-components';
+import styled, { injectGlobal } from 'styled-components';
 import { modularScale } from 'polished';
 import SettingsContainer from './SettingsContainer';
 import Stats from '../Stats';
@@ -81,6 +81,14 @@ class Settings extends PureComponent {
     messageSuccess: PropTypes.func.isRequired,
     messageError: PropTypes.func.isRequired,
   };
+
+  componentDidUpdate() {
+    if (this.props.show) {
+      injectGlobal`body { overflow: hidden; }`;
+    } else {
+      injectGlobal`body { overflow: initial; }`;
+    }
+  }
 
   handleClear = async () => {
     try {
