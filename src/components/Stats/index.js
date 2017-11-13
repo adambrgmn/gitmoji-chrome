@@ -48,13 +48,25 @@ const BarContainer = styled.li`
 `;
 
 const Bar = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   border-radius: 4px;
   font-size: ${modularScale(-1)};
   background-color: ${color.yellow};
   transform-origin: 100% 100%;
-  ${transition('transform')};
+  ${transition('height')};
+
+  &::after {
+    content: ${props => `"${props.emoji}"` || '""'};
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    font-size: 2em;
+    transform: translateX(-50%);
+  }
 `;
 
 const BarText = styled.p`
@@ -79,17 +91,14 @@ const Stats = ({ stats }) => {
           <BarContainer key={stat ? stat.code : i}>
             {stat != null && (
               <Bar
+                emoji={stat.emoji}
                 style={{
-                  transform: `scaleY(${stat.total / highest})`,
+                  height: `calc(100% * ${stat.total / highest})`,
                   backgroundColor: stat.color,
                 }}
               />
             )}
-            {stat != null && (
-              <BarText>
-                {stat.emoji} {stat.total}
-              </BarText>
-            )}
+            {stat != null && <BarText>{stat.total}</BarText>}
           </BarContainer>
         ))}
       </BarsContainer>
