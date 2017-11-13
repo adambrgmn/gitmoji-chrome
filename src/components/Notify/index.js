@@ -6,6 +6,7 @@ import styled, { keyframes } from 'styled-components';
 import { modularScale } from 'polished';
 import * as constants from '../../store/messages/constants';
 import { removeMessage } from '../../store/messages/actions';
+import { messagesSelector } from '../../store/messages/selectors';
 import { color, zIndex } from '../../style/theme';
 
 const animationBounceInOut = keyframes`
@@ -127,7 +128,7 @@ class Notify extends PureComponent {
 }
 
 const mapStateToProps = state => ({
-  messages: state.messages,
+  messages: messagesSelector(state),
 });
 
 const mapDispatchToProps = dispatch =>
