@@ -23,6 +23,11 @@ class EmojiList extends PureComponent {
     this.props.fetchEmojis();
   }
 
+  componentDidUpdate() {
+    if (this.props.emojis.length > 0) return;
+    this.props.fetchEmojis();
+  }
+
   handleClick = emoji => {
     this.props.addRecent(emoji);
     this.props.copy(emoji);

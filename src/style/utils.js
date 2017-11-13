@@ -1,5 +1,6 @@
 import { css } from 'styled-components';
-import { transitions, timingFunctions } from 'polished';
+import { transitions, timingFunctions, opacify } from 'polished';
+import { color } from './theme';
 
 const transition = (...props: TransitionProps[]) => css`
   ${transitions(
@@ -21,4 +22,15 @@ const transition = (...props: TransitionProps[]) => css`
     .join(', ')};
 `;
 
-export { transition };
+const boxShadow = hover => css`
+  box-shadow: 0 1px 2px 0 ${opacify(0.6, color.shadow)};
+
+  ${hover &&
+    css`
+      &:hover {
+        box-shadow: 0 4px 8px 0 ${opacify(0.6, color.shadow)};
+      }
+    `};
+`;
+
+export { transition, boxShadow };

@@ -6,8 +6,8 @@ import Header from './components/Header';
 import SearchInput from './components/SearchInput';
 import RecentList from './components/RecentList';
 import EmojiList from './components/EmojiList';
-import Stats from './components/Stats';
 import Footer from './components/Footer';
+import Settings from './components/Settings';
 
 const Container = styled.div`
   position: relative;
@@ -38,8 +38,8 @@ class App extends Component {
         <SearchInput onChange={this.handleChange} value={value} />
         <RecentList />
         <EmojiList filter={filter} />
-        <Stats />
         <Footer />
+        <Settings />
       </Container>
     );
   }

@@ -34,4 +34,18 @@ const set = (key, value) =>
     }
   });
 
-export { get, set };
+const clear = key =>
+  new Promise((resolve, reject) => {
+    if (chrome && 'storage' in chrome) {
+      try {
+        chrome.storage.sync.clear(resolve());
+      } catch (e) {
+        reject(e);
+      }
+    } else {
+      window.localStorage.clear();
+      resolve();
+    }
+  });
+
+export { get, set, clear };
