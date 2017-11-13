@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import * as types from '../../propTypes';
@@ -36,23 +36,18 @@ const RecentEmoji = styled.span`
   transform: translate(-50%, -50%);
 `;
 
-class RecentPreview extends Component {
+class RecentPreview extends PureComponent {
   static propTypes = {
     emoji: types.emoji.isRequired,
     onClick: PropTypes.func.isRequired,
   };
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.emoji.code !== nextProps.emoji.code;
-  }
-
   render() {
     const { emoji, onClick } = this.props;
-    console.log('rerender', emoji.emoji);
     return (
       <RecentPreviewBtn
         style={{ backgroundColor: emoji.color }}
-        onClick={onClick}
+        onClick={() => onClick(emoji)}
       >
         <RecentEmoji>{emoji.emoji}</RecentEmoji>
       </RecentPreviewBtn>

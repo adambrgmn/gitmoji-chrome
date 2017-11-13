@@ -23,7 +23,7 @@ class EmojiList extends PureComponent {
     this.props.fetchEmojis();
   }
 
-  handleClick = emoji => () => {
+  handleClick = emoji => {
     this.props.addRecent(emoji);
     this.props.copy(emoji);
   };
@@ -36,7 +36,7 @@ class EmojiList extends PureComponent {
           <EmojiPreview
             key={emoji.name}
             emoji={emoji}
-            onClick={this.handleClick(emoji)}
+            onClick={this.handleClick}
           />
         ))}
       </EmojiPreviewContainer>
@@ -45,11 +45,7 @@ class EmojiList extends PureComponent {
 }
 
 const fuzzyFilter = (items, input) => {
-  const updatedItems = items.map(i => ({
-    ...i,
-    filterKey: `${i.emoji} ${i.code} ${i.description}`,
-  }));
-  const filtered = fuzz.filter(updatedItems, input, { key: 'filterKey' });
+  const filtered = fuzz.filter(items, input, { key: 'filterKey' });
   return filtered;
 };
 

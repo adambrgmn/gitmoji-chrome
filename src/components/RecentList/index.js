@@ -20,7 +20,7 @@ class RecentList extends PureComponent {
     this.props.getRecent();
   }
 
-  handleClick = emoji => () => {
+  handleClick = emoji => {
     this.props.addRecent(emoji);
     this.props.copy(emoji);
   };
@@ -37,7 +37,7 @@ class RecentList extends PureComponent {
               <RecentPreview
                 key={emoji.code}
                 emoji={emoji}
-                onClick={this.handleClick(emoji)}
+                onClick={this.handleClick}
               />
             ) : (
               <RecentPreviewEmpty disable key={i} />

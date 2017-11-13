@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled, { keyframes } from 'styled-components';
 import { modularScale } from 'polished';
-import uniqWith from 'lodash/uniqWith';
-import isEqual from 'lodash/isEqual';
 import * as constants from '../../store/messages/constants';
 import { removeMessage } from '../../store/messages/actions';
 import { color, zIndex } from '../../style/theme';
@@ -88,7 +86,7 @@ const NotifyMessageText = styled.span`
   text-align: center;
 `;
 
-class Notify extends Component {
+class Notify extends PureComponent {
   static propTypes = {
     messages: PropTypes.arrayOf(
       PropTypes.shape({
@@ -129,7 +127,7 @@ class Notify extends Component {
 }
 
 const mapStateToProps = state => ({
-  messages: uniqWith(state.messages, isEqual),
+  messages: state.messages,
 });
 
 const mapDispatchToProps = dispatch =>
