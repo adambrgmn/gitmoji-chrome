@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as types from '../../propTypes';
 import * as actions from '../../store/recent/actions';
 import { copy } from '../../store/messages/actions';
+import { uniqRecentSelector } from '../../store/recent/selectors';
 import RecentPreviewContainer from './RecentPreviewContainer';
 import { RecentPreview, RecentPreviewEmpty } from './RecentPreview';
 
@@ -48,7 +49,7 @@ class RecentList extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({ emojis: state.recent });
+const mapStateToProps = state => ({ emojis: uniqRecentSelector(state) });
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ ...actions, copy }, dispatch);
 

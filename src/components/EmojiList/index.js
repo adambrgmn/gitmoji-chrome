@@ -2,10 +2,10 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import fuzz from 'fuzzaldrin-plus';
 import { fetchEmojis } from '../../store/emojis/actions';
 import { addRecent } from '../../store/recent/actions';
 import { copy } from '../../store/messages/actions';
+import { emojisSelector } from '../../store/emojis/selectors';
 import * as types from '../../propTypes';
 import EmojiPreviewContainer from './EmojiPreviewContainer';
 import EmojiPreview from './EmojiPreview';
@@ -44,18 +44,9 @@ class EmojiList extends PureComponent {
   }
 }
 
-const fuzzyFilter = (items, input) => {
-  const filtered = fuzz.filter(items, input, { key: 'filterKey' });
-  return filtered;
-};
-
-const mapStateToProps = (state, props) => {
-  const { filter } = props;
-  const { items } = state.emojis;
-  return {
-    emojis: filter ? fuzzyFilter(items, filter) : items,
-  };
-};
+const mapStateToProps = (state, props) => ({
+  emojis: emojisSelector(state, props),
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ fetchEmojis, addRecent, copy }, dispatch);
