@@ -1,4 +1,5 @@
 import { EMOJIS_ADD, EMOJIS_FETCHING, EMOJIS_FETCHED } from './constants';
+import { RESET_STATE } from '../constants';
 import uniqWith from 'lodash/uniqWith';
 import isEqual from 'lodash/isEqual';
 
@@ -26,6 +27,9 @@ const emojis = (state = initialState, action) => {
         ...state,
         loading: false,
       };
+
+    case RESET_STATE:
+      return initialState;
 
     default:
       return state;
