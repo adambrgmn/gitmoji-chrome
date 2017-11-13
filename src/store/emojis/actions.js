@@ -16,7 +16,10 @@ const fetchEmojisRemote = () => async dispatch => {
     const { gitmojis } = await fesh(process.env.REACT_APP_GITMOJI_URL);
     const scss = await fesh(process.env.REACT_APP_GITMOJI_COLORS_URL, 'text');
     const colors = extractScssVars(scss);
-    const emojis = mergeArray('name', gitmojis, colors);
+    const emojis = mergeArray('name', gitmojis, colors).map(e => ({
+      ...e,
+      filterKey: `${e.emoji} ${e.code} ${e.description}`,
+    }));
 
     dispatch(addEmojis(emojis));
     dispatch(fetchedEmojis());

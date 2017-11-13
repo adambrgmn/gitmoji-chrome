@@ -1,3 +1,4 @@
+import React, { PureComponent } from 'react';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -55,21 +56,17 @@ const EmojiCardDesc = styled.p`
   font-size: ${modularScale(-2)};
 `;
 
-class EmojiPreview extends Component {
+class EmojiPreview extends PureComponent {
   static propTypes = {
     emoji: types.emoji.isRequired,
     onClick: PropTypes.func.isRequired,
   };
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.emoji.code !== nextProps.emoji.code;
-  }
-
   render() {
     const { emoji, onClick } = this.props;
 
     return (
-      <EmojiCard onClick={onClick}>
+      <EmojiCard onClick={() => onClick(emoji)}>
         <EmojiCardHeader style={{ backgroundColor: emoji.color }}>
           <EmojiCardEmoji>{emoji.emoji}</EmojiCardEmoji>
         </EmojiCardHeader>

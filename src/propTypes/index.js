@@ -5,6 +5,7 @@ const emoji = PropTypes.shape({
   code: PropTypes.string.isRequired,
   color: PropTypes.string,
   description: PropTypes.string.isRequired,
+  filterKey: PropTypes.string.isRequired,
 });
 
 export { emoji };
