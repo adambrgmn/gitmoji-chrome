@@ -6,7 +6,7 @@ const color = {
   yellow: '#ffdd67',
   pink: '#ff5a79',
   orange: '#ff9d44',
-  shadow: '#a8b6bf',
+  shadow: 'rgba(162, 182, 194, 0.5)',
 };
 
 const font = {
