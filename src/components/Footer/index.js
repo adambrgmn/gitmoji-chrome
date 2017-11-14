@@ -25,6 +25,12 @@ function Footer() {
   return (
     <FooterContainer>
       <FooterCredit>
+        Created by{' '}
+        <FooterLink href="https://github.com/adambrgmn/gitmoji-chrome/">
+          adambrgmn/gitmoji-chrome
+        </FooterLink>
+      </FooterCredit>
+      <FooterCredit>
         Send all love to{' '}
         <FooterLink href="https://github.com/carloscuesta/gitmoji/">
           carloscuesta/gitmoji
