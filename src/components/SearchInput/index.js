@@ -25,7 +25,7 @@ const Input = styled.input.attrs({
   line-height: 1;
   background-color: transparent;
 
-  &:placeholder {
+  &::placeholder {
     color: ${color.black};
     opacity: 0.5;
   }
