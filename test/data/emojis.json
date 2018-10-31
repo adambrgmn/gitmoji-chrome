@@ -1,0 +1,29 @@
+[
+  {
+    "emoji": "🎨",
+    "entity": "&#x1f3a8;",
+    "code": ":art:",
+    "description": "Improving structure / format of the code.",
+    "name": "art",
+    "color": "#ff7281",
+    "filterKey": "🎨 :art: Improving structure / format of the code."
+  },
+  {
+    "emoji": "⚡️",
+    "entity": "&#x26a1;",
+    "code": ":zap:",
+    "description": "Improving performance.",
+    "name": "zap",
+    "color": "#40C4FF",
+    "filterKey": "⚡️ :zap: Improving performance."
+  },
+  {
+    "emoji": "🔥",
+    "entity": "&#x1f525;",
+    "code": ":fire:",
+    "description": "Removing code or files.",
+    "name": "fire",
+    "color": "#ff9d44",
+    "filterKey": "🔥 :fire: Removing code or files."
+  }
+]
