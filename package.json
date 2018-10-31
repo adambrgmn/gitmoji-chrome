@@ -25,13 +25,59 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "babel-plugin-dynamic-import-node": "^2.2.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.19",
+    "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^5.8.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1",
+    "husky": "^1.1.2",
     "jest": "^23.6.0",
     "jest-dom": "^2.1.0",
+    "lint-staged": "^8.0.3",
     "parcel-bundler": "^1.10.3",
     "parcel-plugin-web-extension": "^1.4.0",
+    "prettier": "^1.14.3",
     "react-testing-library": "^5.2.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "concurrent": false,
+    "linters": {
+      "*.js": [
+        "jest --env=jsdom --passWithNoTests  --findRelatedTests",
+        "eslint --fix",
+        "git add"
+      ],
+      "*.{js,json,css,md}": [
+        "prettier --write",
+        "git add"
+      ]
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false,
+    "proseWrap": "always"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
