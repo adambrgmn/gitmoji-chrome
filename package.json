@@ -9,13 +9,17 @@
   "private": true,
   "scripts": {
     "test": "jest --env=jsdom --watch",
-    "start": "parcel watch src/manifest.json --no-hmr",
+    "start": "NODE_ENV=development parcel watch src/manifest.json --no-hmr",
     "build": "rm -rf dist .cache && parcel build src/manifest.json"
   },
   "dependencies": {
+    "fuzzaldrin-plus": "^0.6.0",
+    "polished": "^2.3.0",
+    "prop-types": "^15.6.2",
     "react": "^16.7.0-alpha.0",
     "react-cache": "^2.0.0-alpha.0",
-    "react-dom": "^16.7.0-alpha.0"
+    "react-dom": "^16.7.0-alpha.0",
+    "styled-components": "^4.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
@@ -30,6 +34,7 @@
     "babel-plugin-dynamic-import-node": "^2.2.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.19",
     "cz-conventional-changelog": "^2.1.0",
+    "dotenv": "^6.1.0",
     "eslint": "^5.8.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.1.0",
@@ -37,6 +42,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
     "husky": "^1.1.2",
+    "isomorphic-fetch": "^2.2.1",
     "jest": "^23.6.0",
     "jest-dom": "^2.1.0",
     "lint-staged": "^8.0.3",
