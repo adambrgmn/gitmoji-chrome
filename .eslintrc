@@ -6,7 +6,8 @@
     "node": true,
     "browser": true,
     "es6": true,
-    "jest": true
+    "jest": true,
+    "webextensions": true
   },
   "rules": {
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
