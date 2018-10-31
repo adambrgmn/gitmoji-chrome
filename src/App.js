@@ -3,10 +3,10 @@ import styled, { ThemeProvider } from 'styled-components';
 import Global from './style/Global';
 import Header from './components/Header';
 import SearchInput from './components/SearchInput';
+import RecentList from './components/RecentList';
 import EmojiList from './components/EmojiList';
 import Footer from './components/Footer';
 import * as theme from './style/theme';
-import emojis from '../test/data/gitmojis.json';
 
 const Container = styled.div`
   position: relative;
@@ -25,7 +25,8 @@ function App() {
           <SearchInput value={filterValue} onChange={setFilterValue} />
 
           <Suspense fallback={<p>Loading...</p>}>
-            <EmojiList filter={filterValue} emojis={emojis} />
+            <RecentList />
+            <EmojiList filter={filterValue} />
           </Suspense>
 
           <Footer />
