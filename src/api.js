@@ -1,3 +1,5 @@
+import uniqBy from 'lodash.uniqby';
+
 const extractScssVariables = scss => {
   const variableRe = /((\w|-)+): \$(\w+),/g;
   const match = {};
@@ -53,4 +55,35 @@ const fetchEmojis = async () => {
   return emojis;
 };
 
-export { fetchEmojis };
+const get = key =>
+  new Promise((resolve, reject) => {
+    try {
+      chrome.storage.sync.get(key, resolve);
+    } catch (err) {
+      reject(err);
+    }
+  });
+
+const set = obj =>
+  new Promise((resolve, reject) => {
+    try {
+      chrome.storage.sync.set(obj, resolve);
+    } catch (err) {
+      reject(err);
+    }
+  });
+
+const recentKey = `${process.env.STORAGE_KEY_PREFIX}-recent`;
+
+const getRecentEmojis = async () => {
+  const result = await get({ [recentKey]: [] });
+  return result[recentKey];
+};
+
+const addToRecentEmojis = async emoji => {
+  const oldEmojis = (await get({ [recentKey]: [] }))[recentKey];
+  const newEmojis = uniqBy([emoji, ...oldEmojis], 'code').slice(0, 5);
+  await set({ [recentKey]: newEmojis });
+};
+
+export { fetchEmojis, getRecentEmojis, addToRecentEmojis };

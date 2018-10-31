@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import fuzz from 'fuzzaldrin-plus';
 import { modularScale } from 'polished';
 import EmojiListItem from './EmojiListItem';
-import { fetchEmojis } from '../api';
+import { fetchEmojis, addToRecentEmojis } from '../api';
 
 const emojiResource = createResource(() => fetchEmojis());
 
@@ -26,10 +26,14 @@ function EmojiList({ filter }) {
     [emojis, filter],
   );
 
+  const handleClick = emoji => {
+    addToRecentEmojis(emoji);
+  };
+
   return (
     <EmojiPreviewContainer>
       {filteredEmojis.map(emoji => (
-        <EmojiListItem key={emoji.code} emoji={emoji} onClick={() => {}} />
+        <EmojiListItem key={emoji.code} emoji={emoji} onClick={handleClick} />
       ))}
     </EmojiPreviewContainer>
   );
