@@ -1,5 +1,9 @@
-import React, { Suspense, lazy } from 'react';
+import React, { ConcurrentMode } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <ConcurrentMode>
+    <App />
+  </ConcurrentMode>,
+);
