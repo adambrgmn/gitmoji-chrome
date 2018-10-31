@@ -7,7 +7,7 @@ function App() {
 
   const change = val => async () => {
     await Promise.resolve();
-    setCount(count => count + val);
+    setCount(c => c + val);
   };
 
   return (
