@@ -86,4 +86,19 @@ const addToRecentEmojis = async emoji => {
   await set({ [recentKey]: newEmojis });
 };
 
-export { fetchEmojis, getRecentEmojis, addToRecentEmojis };
+const subscribeToRecent = callback => {
+  const handleChange = changes => {
+    if (recentKey in changes) {
+      const { newValue, oldValue } = changes[recentKey];
+      callback(newValue, oldValue);
+    }
+  };
+
+  chrome.storage.onChanged.addListener(handleChange);
+
+  return () => {
+    chrome.storage.onChanged.removeListener(handleChange);
+  };
+};
+
+export { fetchEmojis, getRecentEmojis, addToRecentEmojis, subscribeToRecent };
