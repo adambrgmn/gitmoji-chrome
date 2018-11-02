@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { modularScale } from 'polished';
 import Logotype from './Logotype';
@@ -8,12 +8,10 @@ const HeaderContainer = styled.header`
   background-color: #ffdd67;
 `;
 
-function Header() {
-  return (
-    <HeaderContainer>
-      <Logotype />
-    </HeaderContainer>
-  );
-}
+const Header = memo(() => (
+  <HeaderContainer>
+    <Logotype />
+  </HeaderContainer>
+));
 
 export { Header as default };
