@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { modularScale } from 'polished';
 import Link from './Link';
@@ -20,23 +20,21 @@ const FooterLink = styled(Link)`
   text-decoration: none;
 `;
 
-function Footer() {
-  return (
-    <FooterContainer>
-      <FooterCredit>
-        Created by{' '}
-        <FooterLink href="https://github.com/adambrgmn/gitmoji-chrome/">
-          adambrgmn/gitmoji-chrome
-        </FooterLink>
-      </FooterCredit>
-      <FooterCredit>
-        Send all love to{' '}
-        <FooterLink href="https://github.com/carloscuesta/gitmoji/">
-          carloscuesta/gitmoji
-        </FooterLink>
-      </FooterCredit>
-    </FooterContainer>
-  );
-}
+const Footer = memo(() => (
+  <FooterContainer>
+    <FooterCredit>
+      Created by{' '}
+      <FooterLink href="https://github.com/adambrgmn/gitmoji-chrome/">
+        adambrgmn/gitmoji-chrome
+      </FooterLink>
+    </FooterCredit>
+    <FooterCredit>
+      Send all love to{' '}
+      <FooterLink href="https://github.com/carloscuesta/gitmoji/">
+        carloscuesta/gitmoji
+      </FooterLink>
+    </FooterCredit>
+  </FooterContainer>
+));
 
 export { Footer as default };

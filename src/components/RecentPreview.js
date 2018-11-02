@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { modularScale } from 'polished';
@@ -56,17 +56,15 @@ const RecentPreviewEmpty = styled(RecentPreviewBtn)`
   }
 `;
 
-function RecentPreview({ emoji, onClick }) {
-  return (
-    <RecentPreviewBtn
-      style={{ backgroundColor: emoji.color }}
-      onClick={() => onClick(emoji)}
-      data-testid="recent-emoji"
-    >
-      <RecentEmoji>{emoji.emoji}</RecentEmoji>
-    </RecentPreviewBtn>
-  );
-}
+const RecentPreview = memo(({ emoji, onClick }) => (
+  <RecentPreviewBtn
+    style={{ backgroundColor: emoji.color }}
+    onClick={() => onClick(emoji)}
+    data-testid="recent-emoji"
+  >
+    <RecentEmoji>{emoji.emoji}</RecentEmoji>
+  </RecentPreviewBtn>
+));
 
 RecentPreview.propTypes = {
   emoji: types.emoji.isRequired,

@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { modularScale } from 'polished';
 
 const SearchContainer = styled.div`
+  position: sticky;
+  top: 0;
   width: 100%;
   height: auto;
   padding: ${modularScale(0)};
   padding-top: 0;
   background-color: ${p => p.theme.color.yellow};
+  z-index: ${p => p.theme.zIndex.three};
 `;
 
 const Input = styled.input.attrs({
@@ -34,7 +37,7 @@ const Input = styled.input.attrs({
   }
 `;
 
-function SearchInput({ value, onChange }) {
+const SearchInput = memo(({ value, onChange }) => {
   const handleChange = e => {
     const { value: newValue } = e.target;
     onChange(newValue);
@@ -45,7 +48,7 @@ function SearchInput({ value, onChange }) {
       <Input value={value} onChange={handleChange} />
     </SearchContainer>
   );
-}
+});
 
 SearchInput.propTypes = {
   value: PropTypes.string.isRequired,

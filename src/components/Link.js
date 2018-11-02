@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 const openInNewTab = href => e => {
@@ -8,13 +8,11 @@ const openInNewTab = href => e => {
   }
 };
 
-function Link({ href, children, ...props }) {
-  return (
-    <a href={href} {...props} onClick={openInNewTab(href)}>
-      {children}
-    </a>
-  );
-}
+const Link = memo(({ href, children, ...props }) => (
+  <a href={href} {...props} onClick={openInNewTab(href)}>
+    {children}
+  </a>
+));
 
 Link.propTypes = {
   href: PropTypes.string.isRequired,
