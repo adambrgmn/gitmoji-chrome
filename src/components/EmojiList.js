@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import fuzz from 'fuzzaldrin-plus';
 import { modularScale } from 'polished';
 import EmojiListItem from './EmojiListItem';
-import { fetchEmojis, addToRecentEmojis } from '../api';
+import { fetchEmojis, addToRecentEmojis, copyText } from '../api';
 
 const emojiResource = createResource(() => fetchEmojis());
 
@@ -27,6 +27,7 @@ function EmojiList({ filter }) {
   );
 
   const handleClick = emoji => {
+    copyText(emoji.code);
     addToRecentEmojis(emoji);
   };
 
