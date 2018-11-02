@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { modularScale } from 'polished';
@@ -57,27 +57,21 @@ const EmojiCardDesc = styled.p`
   font-size: ${modularScale(-1)};
 `;
 
-class EmojiPreview extends PureComponent {
-  static propTypes = {
-    emoji: types.emoji.isRequired,
-    onClick: PropTypes.func.isRequired,
-  };
+const EmojiPreview = memo(({ emoji, onClick }) => (
+  <EmojiCard onClick={() => onClick(emoji)}>
+    <EmojiCardHeader style={{ backgroundColor: emoji.color }}>
+      <EmojiCardEmoji>{emoji.emoji}</EmojiCardEmoji>
+    </EmojiCardHeader>
+    <EmojiCardInfo>
+      <EmojiCardCode>{emoji.code}</EmojiCardCode>
+      <EmojiCardDesc>{emoji.description}</EmojiCardDesc>
+    </EmojiCardInfo>
+  </EmojiCard>
+));
 
-  render() {
-    const { emoji, onClick } = this.props;
-
-    return (
-      <EmojiCard onClick={() => onClick(emoji)}>
-        <EmojiCardHeader style={{ backgroundColor: emoji.color }}>
-          <EmojiCardEmoji>{emoji.emoji}</EmojiCardEmoji>
-        </EmojiCardHeader>
-        <EmojiCardInfo>
-          <EmojiCardCode>{emoji.code}</EmojiCardCode>
-          <EmojiCardDesc>{emoji.description}</EmojiCardDesc>
-        </EmojiCardInfo>
-      </EmojiCard>
-    );
-  }
-}
+EmojiPreview.propTypes = {
+  emoji: types.emoji.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 export { EmojiPreview as default };
