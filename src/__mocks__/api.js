@@ -6,4 +6,6 @@ const getRecentEmojis = jest.fn(() => Promise.resolve(emojis.slice(0, 5)));
 
 const addToRecentEmojis = jest.fn(() => Promise.resolve());
 
-export { fetchEmojis, getRecentEmojis, addToRecentEmojis };
+const subscribeToRecent = jest.fn();
+
+export { fetchEmojis, getRecentEmojis, addToRecentEmojis, subscribeToRecent };
