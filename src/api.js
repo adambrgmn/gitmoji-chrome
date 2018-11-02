@@ -81,4 +81,14 @@ const subscribeToRecent = callback => {
   return unsubscribe;
 };
 
-export { fetchEmojis, getRecentEmojis, addToRecentEmojis, subscribeToRecent };
+const copyText = async str => {
+  await navigator.clipboard.writeText(str);
+};
+
+export {
+  fetchEmojis,
+  getRecentEmojis,
+  addToRecentEmojis,
+  subscribeToRecent,
+  copyText,
+};

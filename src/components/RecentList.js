@@ -4,7 +4,12 @@ import { unstable_createResource as createResource } from 'react-cache';
 import styled from 'styled-components';
 import { modularScale } from 'polished';
 import { RecentPreview, RecentPreviewEmpty } from './RecentPreview';
-import { getRecentEmojis, addToRecentEmojis, subscribeToRecent } from '../api';
+import {
+  getRecentEmojis,
+  addToRecentEmojis,
+  subscribeToRecent,
+  copyText,
+} from '../api';
 
 const recentResource = createResource(() => getRecentEmojis());
 
@@ -26,6 +31,11 @@ function RecentList() {
 
   const recents = [...emojis, ...Array.from({ length: 5 })].slice(0, 5);
 
+  const handleClick = emoji => {
+    copyText(emoji.code);
+    addToRecentEmojis(emoji);
+  };
+
   return (
     <RecentPreviewContainer>
       {recents.map(
@@ -34,7 +44,7 @@ function RecentList() {
             <RecentPreview
               key={emoji.code}
               emoji={emoji}
-              onClick={addToRecentEmojis}
+              onClick={handleClick}
             />
           ) : (
             <RecentPreviewEmpty disable key={i} />
