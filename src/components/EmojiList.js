@@ -1,13 +1,11 @@
 import React, { useMemo } from 'react';
-import { unstable_createResource as createResource } from 'react-cache';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import fuzz from 'fuzzaldrin-plus';
 import { modularScale } from 'polished';
 import EmojiListItem from './EmojiListItem';
-import { fetchEmojis, addToRecentEmojis, copyText } from '../api';
-
-const emojiResource = createResource(() => fetchEmojis());
+import { EmojiResource } from '../resources';
+import { addToRecentEmojis, copyText } from '../api';
 
 const filterEmojis = (emojis, filter) =>
   fuzz.filter(emojis, filter, { key: 'filterKey' });
@@ -19,7 +17,7 @@ const EmojiPreviewContainer = styled.ul`
 `;
 
 function EmojiList({ filter }) {
-  const emojis = emojiResource.read();
+  const emojis = EmojiResource.read();
 
   const filteredEmojis = useMemo(
     () => (filter.length < 1 ? emojis : filterEmojis(emojis, filter)),
