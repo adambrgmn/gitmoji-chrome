@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { modularScale } from 'polished';
 import { RecentPreview, RecentPreviewEmpty } from './RecentPreview';
-import { addToRecentEmojis, subscribeToRecent, copyText } from '../api';
+import { subscribeToRecent, onEmojiClick } from '../api';
 import { RecentResource } from '../resources';
 
 const RecentPreviewContainer = styled.div`
@@ -24,11 +24,6 @@ function RecentList() {
 
   const recents = [...emojis, ...Array.from({ length: 5 })].slice(0, 5);
 
-  const handleClick = emoji => {
-    copyText(emoji.code);
-    addToRecentEmojis(emoji);
-  };
-
   return (
     <RecentPreviewContainer>
       {recents.map(
@@ -37,7 +32,7 @@ function RecentList() {
             <RecentPreview
               key={emoji.code}
               emoji={emoji}
-              onClick={handleClick}
+              onClick={onEmojiClick}
             />
           ) : (
             <RecentPreviewEmpty disable key={i} />

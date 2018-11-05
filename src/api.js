@@ -1,6 +1,10 @@
 import uniqBy from 'lodash.uniqby';
 import * as storage from './chrome/storage';
 
+const KEYS = {
+  recent: `${process.env.STORAGE_KEY_PREFIX}-recent`,
+};
+
 const extractScssVariables = scss => {
   const variableRe = /((\w|-)+): \$(\w+),/g;
   const match = {};
@@ -56,23 +60,21 @@ const fetchEmojis = async () => {
   return emojis;
 };
 
-const recentKey = `${process.env.STORAGE_KEY_PREFIX}-recent`;
-
 const getRecentEmojis = async () => {
-  const { [recentKey]: result } = await storage.get({ [recentKey]: [] });
+  const { [KEYS.recent]: result } = await storage.get({ [KEYS.recent]: [] });
   return result;
 };
 
 const addToRecentEmojis = async emoji => {
-  const { [recentKey]: oldEmojis } = await storage.get({ [recentKey]: [] });
+  const { [KEYS.recent]: oldEmojis } = await storage.get({ [KEYS.recent]: [] });
   const newEmojis = uniqBy([emoji, ...oldEmojis], 'code').slice(0, 5);
-  await storage.set({ [recentKey]: newEmojis });
+  await storage.set({ [KEYS.recent]: newEmojis });
 };
 
 const subscribeToRecent = callback => {
   const handleChange = changes => {
-    if (recentKey in changes) {
-      const { newValue, oldValue } = changes[recentKey];
+    if (KEYS.recent in changes) {
+      const { newValue, oldValue } = changes[KEYS.recent];
       callback(newValue, oldValue);
     }
   };
@@ -85,10 +87,16 @@ const copyText = async str => {
   await navigator.clipboard.writeText(str);
 };
 
+const onEmojiClick = async emoji => {
+  await copyText(emoji.code);
+  await addToRecentEmojis(emoji);
+};
+
 export {
   fetchEmojis,
   getRecentEmojis,
   addToRecentEmojis,
   subscribeToRecent,
   copyText,
+  onEmojiClick,
 };
