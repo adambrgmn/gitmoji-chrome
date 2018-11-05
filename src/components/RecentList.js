@@ -1,17 +1,10 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
-import { unstable_createResource as createResource } from 'react-cache';
 import styled from 'styled-components';
 import { modularScale } from 'polished';
 import { RecentPreview, RecentPreviewEmpty } from './RecentPreview';
-import {
-  getRecentEmojis,
-  addToRecentEmojis,
-  subscribeToRecent,
-  copyText,
-} from '../api';
-
-const recentResource = createResource(() => getRecentEmojis());
+import { addToRecentEmojis, subscribeToRecent, copyText } from '../api';
+import { RecentResource } from '../resources';
 
 const RecentPreviewContainer = styled.div`
   display: grid;
@@ -24,7 +17,7 @@ const RecentPreviewContainer = styled.div`
 `;
 
 function RecentList() {
-  const initialEmojis = recentResource.read();
+  const initialEmojis = RecentResource.read();
   const [emojis, setEmojis] = useState(initialEmojis);
 
   useEffect(() => subscribeToRecent(setEmojis), []);
