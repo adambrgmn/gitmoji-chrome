@@ -10,10 +10,13 @@ const subscribeToRecent = jest.fn();
 
 const copyText = jest.fn();
 
+const onEmojiClick = jest.fn(() => Promise.resolve());
+
 export {
   fetchEmojis,
   getRecentEmojis,
   addToRecentEmojis,
   subscribeToRecent,
   copyText,
+  onEmojiClick,
 };
