@@ -58,7 +58,7 @@ const EmojiCardDesc = styled.p`
 `;
 
 const EmojiPreview = memo(({ emoji, onClick }) => (
-  <EmojiCard onClick={() => onClick(emoji)}>
+  <EmojiCard role="button" onClick={() => onClick(emoji)}>
     <EmojiCardHeader style={{ backgroundColor: emoji.color }}>
       <EmojiCardEmoji>{emoji.emoji}</EmojiCardEmoji>
     </EmojiCardHeader>
