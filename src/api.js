@@ -1,8 +1,9 @@
 import uniqBy from 'lodash.uniqby';
 import * as storage from './chrome/storage';
 
-const KEYS = {
+const CHROME_STORAGE_KEYS = {
   recent: `${process.env.STORAGE_KEY_PREFIX}-recent`,
+  stats: `${process.env.STORAGE_KEY_PREFIX}-stats`,
 };
 
 const extractScssVariables = scss => {
@@ -61,26 +62,40 @@ const fetchEmojis = async () => {
 };
 
 const getRecentEmojis = async () => {
-  const { [KEYS.recent]: result } = await storage.get({ [KEYS.recent]: [] });
+  const { [CHROME_STORAGE_KEYS.recent]: result } = await storage.get({
+    [CHROME_STORAGE_KEYS.recent]: [],
+  });
   return result;
 };
 
 const addToRecentEmojis = async emoji => {
-  const { [KEYS.recent]: oldEmojis } = await storage.get({ [KEYS.recent]: [] });
+  const { [CHROME_STORAGE_KEYS.recent]: oldEmojis } = await storage.get({
+    [CHROME_STORAGE_KEYS.recent]: [],
+  });
   const newEmojis = uniqBy([emoji, ...oldEmojis], 'code').slice(0, 5);
-  await storage.set({ [KEYS.recent]: newEmojis });
+  await storage.set({ [CHROME_STORAGE_KEYS.recent]: newEmojis });
 };
 
 const subscribeToRecent = callback => {
   const handleChange = changes => {
-    if (KEYS.recent in changes) {
-      const { newValue, oldValue } = changes[KEYS.recent];
+    if (CHROME_STORAGE_KEYS.recent in changes) {
+      const { newValue, oldValue } = changes[CHROME_STORAGE_KEYS.recent];
       callback(newValue, oldValue);
     }
   };
 
   const unsubscribe = storage.subscribe(handleChange);
   return unsubscribe;
+};
+
+const updateStatistics = async emoji => {
+  const { [CHROME_STORAGE_KEYS.stats]: stats } = await storage.get({
+    [CHROME_STORAGE_KEYS.stats]: {},
+  });
+
+  const currentCount = stats[emoji.code].count || 0;
+  stats[emoji.code] = { ...emoji, count: currentCount + 1 };
+  await storage.set({ [CHROME_STORAGE_KEYS.stats]: stats });
 };
 
 const copyText = async str => {
@@ -90,6 +105,7 @@ const copyText = async str => {
 const onEmojiClick = async emoji => {
   await copyText(emoji.code);
   await addToRecentEmojis(emoji);
+  // await updateStatistics(emoji);
 };
 
 export {
@@ -97,6 +113,7 @@ export {
   getRecentEmojis,
   addToRecentEmojis,
   subscribeToRecent,
+  updateStatistics,
   copyText,
   onEmojiClick,
 };
