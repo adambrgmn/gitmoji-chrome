@@ -1,7 +1,7 @@
 import uniqBy from 'lodash.uniqby';
 import * as storage from './chrome/storage';
 
-const CHROME_STORAGE_KEYS = {
+const keys = {
   recent: `${process.env.STORAGE_KEY_PREFIX}-recent`,
   stats: `${process.env.STORAGE_KEY_PREFIX}-stats`,
 };
@@ -62,24 +62,24 @@ const fetchEmojis = async () => {
 };
 
 const getRecentEmojis = async () => {
-  const { [CHROME_STORAGE_KEYS.recent]: result } = await storage.get({
-    [CHROME_STORAGE_KEYS.recent]: [],
+  const { [keys.recent]: result } = await storage.get({
+    [keys.recent]: [],
   });
   return result;
 };
 
 const addToRecentEmojis = async emoji => {
-  const { [CHROME_STORAGE_KEYS.recent]: oldEmojis } = await storage.get({
-    [CHROME_STORAGE_KEYS.recent]: [],
+  const { [keys.recent]: oldEmojis } = await storage.get({
+    [keys.recent]: [],
   });
   const newEmojis = uniqBy([emoji, ...oldEmojis], 'code').slice(0, 5);
-  await storage.set({ [CHROME_STORAGE_KEYS.recent]: newEmojis });
+  await storage.set({ [keys.recent]: newEmojis });
 };
 
 const subscribeToRecent = callback => {
   const handleChange = changes => {
-    if (CHROME_STORAGE_KEYS.recent in changes) {
-      const { newValue, oldValue } = changes[CHROME_STORAGE_KEYS.recent];
+    if (keys.recent in changes) {
+      const { newValue, oldValue } = changes[keys.recent];
       callback(newValue, oldValue);
     }
   };
@@ -88,14 +88,45 @@ const subscribeToRecent = callback => {
   return unsubscribe;
 };
 
-const updateStatistics = async emoji => {
-  const { [CHROME_STORAGE_KEYS.stats]: stats } = await storage.get({
-    [CHROME_STORAGE_KEYS.stats]: {},
+const getStatistics = async () => {
+  const { [keys.stats]: stats } = await storage.get({
+    [keys.stats]: [],
   });
 
-  const currentCount = stats[emoji.code].count || 0;
-  stats[emoji.code] = { ...emoji, count: currentCount + 1 };
-  await storage.set({ [CHROME_STORAGE_KEYS.stats]: stats });
+  return stats.sort((a, b) => b.count - a.count);
+};
+
+const updateStatistics = async emoji => {
+  const { [keys.stats]: stats } = await storage.get({
+    [keys.stats]: [],
+  });
+
+  const stat = stats.find(e => e.code === emoji.code) || {
+    code: emoji.code,
+    emoji: emoji.emoji,
+    color: emoji.color,
+  };
+
+  stat.count = (stat.count || 0) + 1;
+
+  const newStats = uniqBy([stat, ...stats], 'code');
+  await storage.set({ [keys.stats]: newStats });
+};
+
+const subscribeToStatistics = callback => {
+  const handleChange = changes => {
+    if (keys.stats in changes) {
+      const { newValue, oldValue } = changes[keys.stats];
+      callback(newValue, oldValue);
+    }
+  };
+
+  const unsubscribe = storage.subscribe(handleChange);
+  return unsubscribe;
+};
+
+const resetData = async () => {
+  await Promise.all(Object.values(keys).map(key => storage.set({ [key]: [] })));
 };
 
 const copyText = async str => {
@@ -105,7 +136,7 @@ const copyText = async str => {
 const onEmojiClick = async emoji => {
   await copyText(emoji.code);
   await addToRecentEmojis(emoji);
-  // await updateStatistics(emoji);
+  await updateStatistics(emoji);
 };
 
 export {
@@ -113,7 +144,10 @@ export {
   getRecentEmojis,
   addToRecentEmojis,
   subscribeToRecent,
+  getStatistics,
   updateStatistics,
+  subscribeToStatistics,
+  resetData,
   copyText,
   onEmojiClick,
 };
