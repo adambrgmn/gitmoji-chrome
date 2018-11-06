@@ -22,20 +22,30 @@ const extractScssVariables = scss => {
 };
 
 const getGitmojis = async () => {
-  const res = await fetch(process.env.GITMOJI_URL);
-  if (!res.ok) throw new Error('Error fetching emojis');
+  try {
+    const res = await fetch(process.env.GITMOJI_URL);
+    if (!res.ok) throw new Error('Error fetching emojis');
 
-  const { gitmojis } = await res.json();
-  return gitmojis;
+    const { gitmojis } = await res.json();
+    return gitmojis;
+  } catch (err) {
+    throw new Error('An error ocured while fetching the emojis from the web');
+  }
 };
 
 const getColors = async () => {
-  const res = await fetch(process.env.GITMOJI_COLORS_URL);
-  if (!res.ok) throw new Error('Error fetching emojis');
+  try {
+    const res = await fetch(process.env.GITMOJI_COLORS_URL);
+    if (!res.ok) throw new Error('Error fetching emojis');
 
-  const scss = await res.text();
-  const variables = extractScssVariables(scss);
-  return variables;
+    const scss = await res.text();
+    const variables = extractScssVariables(scss);
+    return variables;
+  } catch (err) {
+    throw new Error(
+      'An error occured while fetching emoji colors from the web',
+    );
+  }
 };
 
 const getEmojis = async () => {
