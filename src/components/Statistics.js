@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { modularScale } from 'polished';
 import SettingsSectionTitle from './SettingsSectionTitle';
 import { StatisticsResource } from '../resources';
-import { subscribeToStatistics } from '../api';
+import { subscribeToStatistics } from '../api/statistics';
 
 const ListContainer = styled.ul`
   display: flex;
@@ -59,9 +59,16 @@ const Statistics = memo(() => {
   const initialStats = StatisticsResource.read();
   const [stats, setStats] = useState(initialStats);
 
-  useEffect(() => subscribeToStatistics(setStats), []);
+  useEffect(
+    () => subscribeToStatistics((newValue = []) => setStats(newValue)),
+    [],
+  );
 
-  const topStats = [...stats, ...Array.from({ length: 5 })].slice(0, 5);
+  const topStats = [
+    ...stats.sort((a, b) => b.count - a.count),
+    ...Array.from({ length: 5 }),
+  ].slice(0, 5);
+
   const max = topStats.reduce((m, e) => (e && e.count > m ? e.count : m), 0);
 
   return (

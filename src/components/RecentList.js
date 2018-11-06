@@ -3,8 +3,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { modularScale } from 'polished';
 import { RecentPreview, RecentPreviewEmpty } from './RecentPreview';
-import { subscribeToRecent, onEmojiClick } from '../api';
+import { handleEmojiClick } from '../utils';
 import { RecentResource } from '../resources';
+import { subscribeToRecent } from '../api/recent';
 
 const RecentPreviewContainer = styled.div`
   display: grid;
@@ -20,7 +21,10 @@ function RecentList() {
   const initialEmojis = RecentResource.read();
   const [emojis, setEmojis] = useState(initialEmojis);
 
-  useEffect(() => subscribeToRecent(setEmojis), []);
+  useEffect(
+    () => subscribeToRecent((newValue = []) => setEmojis(newValue)),
+    [],
+  );
 
   const recents = [...emojis, ...Array.from({ length: 5 })].slice(0, 5);
 
@@ -32,7 +36,7 @@ function RecentList() {
             <RecentPreview
               key={emoji.code}
               emoji={emoji}
-              onClick={onEmojiClick}
+              onClick={handleEmojiClick}
             />
           ) : (
             <RecentPreviewEmpty disable key={i} />
