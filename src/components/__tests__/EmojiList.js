@@ -3,9 +3,10 @@ import { waitForElement, fireEvent } from 'react-testing-library';
 import EmojiList from '../EmojiList';
 import { render } from '../../../test/utils';
 import gitmojis from '../../../test/data/gitmojis.json';
-import { onEmojiClick } from '../../api';
+import { handleEmojiClick } from '../../utils';
 
-jest.mock('../../api.js');
+jest.mock('../../api/emojis.js');
+jest.mock('../../utils.js');
 
 it('should render a list of emojis', async () => {
   const { getAllByText } = render(<EmojiList filter="" />);
@@ -27,5 +28,5 @@ it('should add an emoji to recents when clicking', async () => {
   const emoj = await waitForElement(() => getByTestId('emoji-item'));
 
   fireEvent.click(emoj);
-  expect(onEmojiClick).toHaveBeenCalled();
+  expect(handleEmojiClick).toHaveBeenCalled();
 });

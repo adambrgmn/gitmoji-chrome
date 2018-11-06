@@ -1,10 +1,10 @@
 import 'isomorphic-fetch';
 import dotenv from 'dotenv';
-import { fetchEmojis } from '../api';
+import { getEmojis } from '../api/emojis';
 
 it('should fetch emojis from the gitmoji github repository', async () => {
   dotenv.config();
-  const emojis = await fetchEmojis();
+  const emojis = await getEmojis();
 
   expect(emojis).toEqual(
     expect.arrayContaining([

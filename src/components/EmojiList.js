@@ -5,7 +5,7 @@ import fuzz from 'fuzzaldrin-plus';
 import { modularScale } from 'polished';
 import EmojiListItem from './EmojiListItem';
 import { EmojiResource } from '../resources';
-import { onEmojiClick } from '../api';
+import { handleEmojiClick } from '../utils';
 
 const filterEmojis = (emojis, filter) =>
   fuzz.filter(emojis, filter, { key: 'filterKey' });
@@ -27,7 +27,11 @@ function EmojiList({ filter }) {
   return (
     <EmojiPreviewContainer>
       {filteredEmojis.map(emoji => (
-        <EmojiListItem key={emoji.code} emoji={emoji} onClick={onEmojiClick} />
+        <EmojiListItem
+          key={emoji.code}
+          emoji={emoji}
+          onClick={handleEmojiClick}
+        />
       ))}
     </EmojiPreviewContainer>
   );

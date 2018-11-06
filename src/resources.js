@@ -1,8 +1,10 @@
 import { unstable_createResource as createResource } from 'react-cache';
-import { fetchEmojis, getRecentEmojis, getStatistics } from './api';
+import { getEmojis } from './api/emojis';
+import { getRecent } from './api/recent';
+import { getStatistics } from './api/statistics';
 
-const EmojiResource = createResource(() => fetchEmojis());
-const RecentResource = createResource(() => getRecentEmojis());
+const EmojiResource = createResource(() => getEmojis());
+const RecentResource = createResource(() => getRecent());
 const StatisticsResource = createResource(() => getStatistics());
 
 export { EmojiResource, RecentResource, StatisticsResource };

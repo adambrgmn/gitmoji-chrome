@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { modularScale, darken } from 'polished';
 import SettingsSectionTitle from './SettingsSectionTitle';
 import { boxShadow, transition } from '../style/utils';
-import { resetData } from '../api';
+import { clear } from '../chrome/storage';
 
 const ClearButton = styled.button`
   display: block;
@@ -31,7 +31,7 @@ const ClearButton = styled.button`
 const ClearData = memo(() => (
   <Fragment>
     <SettingsSectionTitle>Clear all data</SettingsSectionTitle>
-    <ClearButton type="button" onClick={resetData}>
+    <ClearButton type="button" onClick={() => clear()}>
       Clear all
     </ClearButton>
   </Fragment>
