@@ -33,31 +33,27 @@ function App() {
       <Fragment>
         <Global />
 
-        <SettingsButton onClick={transitionPage}>
-          {page === PAGE.emoji ? '🛠' : '💾'}
-        </SettingsButton>
-
         <Container>
+          <SettingsButton onClick={transitionPage}>
+            {page === PAGE.emoji ? '🛠' : '💾'}
+          </SettingsButton>
+
           <Header />
 
-          {page === PAGE.emoji && (
-            <Fragment>
-              <SearchInput value={filterValue} onChange={setFilterValue} />
+          <div hidden={page !== PAGE.emoji}>
+            <SearchInput value={filterValue} onChange={setFilterValue} />
 
-              <Suspense fallback={<Loader />}>
-                <RecentList />
-                <EmojiList filter={filterValue} />
-              </Suspense>
-            </Fragment>
-          )}
+            <Suspense fallback={<Loader />}>
+              <RecentList />
+              <EmojiList filter={filterValue} />
+            </Suspense>
+          </div>
 
-          {page === PAGE.settings && (
-            <Fragment>
-              <Suspense fallback={<Loader />}>
-                <Settings />
-              </Suspense>
-            </Fragment>
-          )}
+          <div hidden={page !== PAGE.settings}>
+            <Suspense fallback={<Loader />}>
+              <Settings />
+            </Suspense>
+          </div>
 
           <Footer />
         </Container>

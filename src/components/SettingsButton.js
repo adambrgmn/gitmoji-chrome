@@ -9,6 +9,10 @@ const SettingsButton = styled.button`
   margin: 0;
   background-color: transparent;
   z-index: 99;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export { SettingsButton as default };
