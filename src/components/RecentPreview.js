@@ -35,7 +35,9 @@ const RecentEmoji = styled.span`
   transform: translate(-50%, -50%);
 `;
 
-const RecentPreviewEmpty = styled(RecentPreviewBtn)`
+const RecentPreviewEmpty = styled(RecentPreviewBtn).attrs({
+  disabled: true,
+})`
   background-color: transparent;
   cursor: initial;
 

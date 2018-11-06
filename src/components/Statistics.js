@@ -1,5 +1,5 @@
 import React, { Fragment, memo, useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { modularScale } from 'polished';
 import SettingsSectionTitle from './SettingsSectionTitle';
 import { StatisticsResource } from '../resources';
@@ -22,12 +22,24 @@ const ListItem = styled.li`
   align-items: center;
 `;
 
+const growingBar = keyframes`
+  from {
+    transform: scale3d(1, 0, 1);
+  }
+
+  to {
+    transform: scaleY(1, 1, 1);
+  }
+  }
+`;
+
 const Bar = styled.div`
   position: relative;
   width: ${modularScale(2.5)};
   height: ${modularScale(5)};
   border: 1px dashed ${p => p.theme.color.grey};
   border-radius: 4px;
+  overflow: hidden;
 
   &::before {
     content: '';
@@ -37,6 +49,12 @@ const Bar = styled.div`
     width: 100%;
     height: calc(100% * ${p => p.barHeight});
     background-color: ${p => p.barColor};
+
+    transform-origin: 100% 100% 0;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-name: ${growingBar};
+    animation-timing-function: ease-out;
   }
 `;
 
