@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { Suspense } from 'react';
 import { render as rtlRender } from 'react-testing-library';
 import { ThemeProvider } from 'styled-components';
@@ -10,4 +11,17 @@ const render = component =>
     </Suspense>,
   );
 
-export { render };
+const disableConsole = (method = 'log') => {
+  let originalConsole;
+
+  beforeEach(() => {
+    originalConsole = console[method];
+    console[method] = () => {};
+  });
+
+  afterEach(() => {
+    console[method] = originalConsole;
+  });
+};
+
+export { render, disableConsole };
