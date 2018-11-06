@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { modularScale } from 'polished';
 import Statistics from './Statistics';
 import ClearData from './ClearData';
+import ErrorBoundry from './ErrorBoundry';
+import ErrorComp from './ErrorComp';
 
 const Container = styled.div`
   width: 100%;
@@ -10,10 +12,14 @@ const Container = styled.div`
 `;
 
 const Section = styled.div`
-  margin-bottom: ${modularScale(5)};
+  margin-bottom: ${modularScale(2.5)};
+  border-bottom: 1px solid ${p => p.theme.black};
+  padding-bottom: ${modularScale(2.5)};
 
   &:last-child {
     margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
   }
 `;
 
@@ -21,8 +27,11 @@ function Settings() {
   return (
     <Container>
       <Section>
-        <Statistics />
+        <ErrorBoundry renderError={p => <ErrorComp {...p} />}>
+          <Statistics />
+        </ErrorBoundry>
       </Section>
+
       <Section>
         <ClearData />
       </Section>

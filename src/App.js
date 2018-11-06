@@ -9,6 +9,8 @@ import Footer from './components/Footer';
 import Loader from './components/Loader';
 import * as theme from './style/theme';
 import SettingsButton from './components/SettingsButton';
+import ErrorBoundry from './components/ErrorBoundry';
+import ErrorComp from './components/ErrorComp';
 
 const Settings = lazy(() => import('./components/Settings'));
 
@@ -41,18 +43,22 @@ function App() {
           <Header />
 
           <div hidden={page !== PAGE.emoji}>
-            <SearchInput value={filterValue} onChange={setFilterValue} />
+            <ErrorBoundry renderError={props => <ErrorComp {...props} />}>
+              <SearchInput value={filterValue} onChange={setFilterValue} />
 
-            <Suspense fallback={<Loader />}>
-              <RecentList />
-              <EmojiList filter={filterValue} />
-            </Suspense>
+              <Suspense fallback={<Loader />}>
+                <RecentList />
+                <EmojiList filter={filterValue} />
+              </Suspense>
+            </ErrorBoundry>
           </div>
 
           <div hidden={page !== PAGE.settings}>
-            <Suspense fallback={<Loader />}>
-              <Settings />
-            </Suspense>
+            <ErrorBoundry renderError={props => <ErrorComp {...props} />}>
+              <Suspense fallback={<Loader />}>
+                <Settings />
+              </Suspense>
+            </ErrorBoundry>
           </div>
 
           <Footer />
