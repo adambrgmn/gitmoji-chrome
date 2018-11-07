@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { modularScale } from 'polished';
+import About from './About';
 import Statistics from './Statistics';
 import ClearData from './ClearData';
 import ErrorBoundry from './ErrorBoundry';
@@ -26,6 +27,10 @@ const Section = styled.div`
 function Settings() {
   return (
     <Container>
+      <Section>
+        <About />
+      </Section>
+
       <Section>
         <ErrorBoundry renderError={p => <ErrorComp {...p} />}>
           <Statistics />
