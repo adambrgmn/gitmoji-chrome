@@ -8,7 +8,7 @@ const SettingsButton = styled.button`
   padding: 0.5rem;
   margin: 0;
   background-color: transparent;
-  z-index: 99;
+  z-index: ${p => p.theme.zIndex.two};
 
   &:focus {
     outline: none;
