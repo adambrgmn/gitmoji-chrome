@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { modularScale } from 'polished';
+import posed, { PoseGroup } from 'react-pose';
 import { RecentPreview, RecentPreviewEmpty } from './RecentPreview';
 import { handleEmojiClick } from '../utils';
 import { RecentResource } from '../resources';
@@ -17,6 +18,8 @@ const RecentPreviewContainer = styled.div`
   padding: 0 ${modularScale(0)};
 `;
 
+const Child = posed.div();
+
 function RecentList() {
   const initialEmojis = RecentResource.read();
   const [emojis, setEmojis] = useState(initialEmojis);
@@ -30,18 +33,21 @@ function RecentList() {
 
   return (
     <RecentPreviewContainer>
-      {recents.map(
-        (emoji, i) =>
-          emoji != null ? (
-            <RecentPreview
-              key={emoji.code}
-              emoji={emoji}
-              onClick={handleEmojiClick}
-            />
-          ) : (
-            <RecentPreviewEmpty disable key={i} />
-          ),
-      )}
+      <PoseGroup>
+        {recents.map((emoji, i) => (
+          <Child key={emoji ? emoji.code : i}>
+            {emoji != null ? (
+              <RecentPreview
+                key={emoji.code}
+                emoji={emoji}
+                onClick={handleEmojiClick}
+              />
+            ) : (
+              <RecentPreviewEmpty disable key={i} />
+            )}
+          </Child>
+        ))}
+      </PoseGroup>
     </RecentPreviewContainer>
   );
 }
