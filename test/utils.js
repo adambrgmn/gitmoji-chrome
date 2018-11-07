@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import React, { Suspense } from 'react';
+import ReactDOM from 'react-dom';
 import { render as rtlRender } from 'react-testing-library';
 import { ThemeProvider } from 'styled-components';
 import * as theme from '../src/style/theme';
@@ -24,4 +25,9 @@ const disableConsole = (method = 'log') => {
   });
 };
 
-export { render, disableConsole };
+const flushEffects = () => {
+  const Noop = () => null;
+  ReactDOM.render(<Noop />, document.createElement('template'));
+};
+
+export { render, disableConsole, flushEffects };

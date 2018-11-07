@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Loader from './components/Loader';
 import * as theme from './style/theme';
 import SettingsButton from './components/SettingsButton';
+import Notifications from './components/Notifications';
 import ErrorBoundry from './components/ErrorBoundry';
 import ErrorComp from './components/ErrorComp';
 
@@ -34,6 +35,8 @@ function App() {
     <ThemeProvider theme={theme}>
       <Fragment>
         <Global />
+
+        <Notifications />
 
         <Container>
           <SettingsButton onClick={transitionPage}>
