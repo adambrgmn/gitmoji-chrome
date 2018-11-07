@@ -11,7 +11,7 @@ const SearchContainer = styled.div`
   padding: ${modularScale(0)};
   padding-top: 0;
   background-color: ${p => p.theme.color.yellow};
-  z-index: ${p => p.theme.zIndex.three};
+  z-index: ${p => p.theme.zIndex.one};
 `;
 
 const Input = styled.input.attrs({
