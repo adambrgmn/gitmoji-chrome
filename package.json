@@ -1,6 +1,6 @@
 {
   "name": "gitmoji-chrome",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "Get gitmojis copied to clipboard",
   "main": "index.js",
   "repository": "git@github.com:adambrgmn/gitmoji-chrome.git",
@@ -10,7 +10,8 @@
   "scripts": {
     "test": "jest --env=jsdom --watch",
     "start": "NODE_ENV=development parcel watch src/manifest.json --no-hmr",
-    "build": "rm -rf dist .cache && parcel build src/manifest.json"
+    "build": "rm -rf dist .cache && parcel build src/manifest.json",
+    "release": "semantic-release"
   },
   "dependencies": {
     "fuzzaldrin-plus": "^0.6.0",
@@ -53,7 +54,8 @@
     "parcel-bundler": "^1.10.3",
     "parcel-plugin-web-extension": "^1.4.0",
     "prettier": "^1.15.1",
-    "react-testing-library": "^5.2.3"
+    "react-testing-library": "^5.2.3",
+    "semantic-release": "^15.10.8"
   },
   "husky": {
     "hooks": {
@@ -68,7 +70,7 @@
         "eslint --fix",
         "git add"
       ],
-      "*.{js,json,css,md,html}": [
+      "*.{js,json,css,md,html,yml}": [
         "prettier --write",
         "git add"
       ]
