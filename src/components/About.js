@@ -16,7 +16,7 @@ const About = memo(() => (
         carloscuesta/gitmoji
       </Link>
       . If you are missing any emojis, please contribute to that repo and they
-      will be fethced automagically by this extension.
+      will be fetched automagically by this extension.
     </p>
   </div>
 ));
