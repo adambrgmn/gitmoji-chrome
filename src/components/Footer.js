@@ -15,24 +15,19 @@ const FooterCredit = styled.p`
   text-align: center;
 `;
 
-const FooterLink = styled(Link)`
-  color: ${p => p.theme.color.pink};
-  text-decoration: none;
-`;
-
 const Footer = memo(() => (
   <FooterContainer>
     <FooterCredit>
       Created by{' '}
-      <FooterLink href="https://github.com/adambrgmn/gitmoji-chrome/">
+      <Link href="https://github.com/adambrgmn/gitmoji-chrome/">
         adambrgmn/gitmoji-chrome
-      </FooterLink>
+      </Link>
     </FooterCredit>
     <FooterCredit>
       Send all love to{' '}
-      <FooterLink href="https://github.com/carloscuesta/gitmoji/">
+      <Link href="https://github.com/carloscuesta/gitmoji/">
         carloscuesta/gitmoji
-      </FooterLink>
+      </Link>
     </FooterCredit>
   </FooterContainer>
 ));
