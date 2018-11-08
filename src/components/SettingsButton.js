@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { hideVisually } from 'polished';
 
 const SettingsButton = styled.button`
   position: absolute;
@@ -15,4 +16,8 @@ const SettingsButton = styled.button`
   }
 `;
 
-export { SettingsButton as default };
+const HiddenLabel = styled.span`
+  ${hideVisually()};
+`;
+
+export { SettingsButton as default, HiddenLabel };
