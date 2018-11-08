@@ -4,7 +4,7 @@ module.exports = {
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
     '@semantic-release/git',
-    ['@semantic-release/github', { assets: ['dist/**'] }],
+    '@semantic-release/github',
     [
       'semantic-release-chrome',
       {
