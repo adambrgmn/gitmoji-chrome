@@ -1,6 +1,6 @@
 <p align="center">
 	<a href="https://github.com/adambrgmn/gitmoji-chrome">
-		<img src="https://raw.githubusercontent.com/adambrgmn/gitmoji-chrome/master/screenshots/screenshot-main.png" alt="gitmoji">
+		<img src="screenshots/screenshot-main.png" alt="gitmoji">
 	</a>
 </p>
 
