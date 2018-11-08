@@ -13,12 +13,8 @@ const getStatistics = jest.fn(() =>
   ),
 );
 
-const addToStatisticsgetStatistics = jest.fn(() => Promise.resolve());
+const addToStatistics = jest.fn(() => Promise.resolve());
 
-const subscribeToStatisticsgetStatistics = jest.fn();
+const subscribeToStatistics = jest.fn();
 
-export {
-  getStatistics,
-  addToStatisticsgetStatistics,
-  subscribeToStatisticsgetStatistics,
-};
+export { getStatistics, addToStatistics, subscribeToStatistics };
