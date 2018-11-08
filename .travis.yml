@@ -1,0 +1,22 @@
+language: node_js
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
+notifications:
+  email: false
+
+node_js:
+  - '10'
+
+script:
+  - yarn test:ci && yarn build
+
+after_success:
+  - yarn run release
+
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/

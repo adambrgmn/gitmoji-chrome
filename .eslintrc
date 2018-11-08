@@ -1,0 +1,33 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["airbnb", "prettier"],
+  "env": {
+    "shared-node-browser": true,
+    "node": true,
+    "browser": true,
+    "es6": true,
+    "jest": true,
+    "webextensions": true
+  },
+  "rules": {
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+
+    "react/jsx-filename-extension": 0,
+    "react/prefer-stateless-function": 0,
+    "react/jsx-indent": 0,
+    "react/jsx-indent-props": 0,
+    "react/sort-comp": 0,
+    "react/require-default-props": 0,
+    "react/jsx-one-expression-per-line": 0,
+
+    "import/prefer-default-export": 0,
+
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link", "NavLink"],
+        "specialLink": ["to"]
+      }
+    ]
+  }
+}

@@ -1,3 +1,5 @@
+import { rgba } from 'polished';
+
 const color = {
   bg: '#f5f5f5',
   black: '#000000',
@@ -6,7 +8,7 @@ const color = {
   yellow: '#ffdd67',
   pink: '#ff5a79',
   orange: '#ff9d44',
-  shadow: 'rgba(162, 182, 194, 0.5)',
+  shadow: rgba(162, 182, 194, 0.5),
 };
 
 const font = {
