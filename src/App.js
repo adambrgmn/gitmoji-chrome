@@ -8,7 +8,7 @@ import EmojiList from './components/EmojiList';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
 import * as theme from './style/theme';
-import SettingsButton from './components/SettingsButton';
+import SettingsButton, { HiddenLabel } from './components/SettingsButton';
 import Notifications from './components/Notifications';
 import ErrorBoundry from './components/ErrorBoundry';
 import ErrorComp from './components/ErrorComp';
@@ -41,11 +41,14 @@ function App() {
         <Container>
           <SettingsButton onClick={transitionPage}>
             {page === PAGE.emoji ? '🛠' : '💾'}
+            <HiddenLabel>
+              Go to {page === PAGE.emoji ? 'settings' : 'emojis'}
+            </HiddenLabel>
           </SettingsButton>
 
           <Header />
 
-          <div hidden={page !== PAGE.emoji}>
+          {page === PAGE.emoji && (
             <ErrorBoundry renderError={props => <ErrorComp {...props} />}>
               <SearchInput value={filterValue} onChange={setFilterValue} />
 
@@ -54,15 +57,15 @@ function App() {
                 <EmojiList filter={filterValue} />
               </Suspense>
             </ErrorBoundry>
-          </div>
+          )}
 
-          <div hidden={page !== PAGE.settings}>
+          {page === PAGE.settings && (
             <ErrorBoundry renderError={props => <ErrorComp {...props} />}>
               <Suspense fallback={<Loader />}>
                 <Settings />
               </Suspense>
             </ErrorBoundry>
-          </div>
+          )}
 
           <Footer />
         </Container>
