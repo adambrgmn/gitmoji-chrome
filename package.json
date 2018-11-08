@@ -9,6 +9,7 @@
   "private": true,
   "scripts": {
     "test": "jest --env=jsdom --watch",
+    "test:ci": "jest --env=jsdom --ci",
     "start": "NODE_ENV=development parcel watch src/manifest.json --no-hmr",
     "build": "rm -rf dist .cache && parcel build src/manifest.json",
     "release": "semantic-release"
